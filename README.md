@@ -28,7 +28,7 @@ Other highlights:
 
 ### Documentation
 
-the [JSS](https://dx.doi.org/10.18637/jss.v036.i05) article and the [Handbook of Statistics](https://doi.org/10.1016/B978-0-444-63431-3.00008-5) book chapter both provide documentation about the tolerance package.  Moreover, the [help file](https://CRAN.R-project.org/package=tolerance) also documents the references used for each function.
+The [JSS](https://dx.doi.org/10.18637/jss.v036.i05) article and the [Handbook of Statistics](https://doi.org/10.1016/B978-0-444-63431-3.00008-5) book chapter both provide documentation about the tolerance package.  Moreover, the [help file](https://CRAN.R-project.org/package=tolerance) also documents the references used for each function.
 
 ### Examples
 
