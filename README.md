@@ -1,50 +1,57 @@
-## HoRM: Supplemental Functions and Datasets for "Handbook of Regression Methods"	<a href='https://github.com/dsy109/HoRM'><img src='man/figures/HoRM.png' align="right" height="138.5" /></a>
+## tolerance: Statistical Tolerance Intervals and Regions	<a href='https://github.com/dsy109/tolerance'><img src='man/figures/tolerance.png' align="right" height="138.5" /></a>
 
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)	
-![CRAN/METACRAN](https://img.shields.io/cran/l/HoRM)	
-[![CRAN status](https://www.r-pkg.org/badges/version/HoRM)](https://CRAN.R-project.org/package=HoRM)
-[![Dependencies](https://tinyverse.netlify.com/badge/HoRM)](https://cran.r-project.org/package=HoRM)
-![GitHub last commit](https://img.shields.io/github/last-commit/dsy109/HoRM)
-[![Downloads](https://cranlogs.r-pkg.org/badges/HoRM?color=brightgreen)](https://www.r-pkg.org/pkg/HoRM)
-[![Shiny](https://img.shields.io/badge/Shiny-HoRM-brightgreen)](https://horm.as.uky.edu/)
-[![Book](https://img.shields.io/badge/HoRM__Book-ISBN%209781498775298-brightgreen)](https://www.routledge.com/Handbook-of-Regression-Methods/Young/p/book/9781498775298)
+![CRAN/METACRAN](https://img.shields.io/cran/l/tolerance)	
+[![CRAN status](https://www.r-pkg.org/badges/version/tolerance)](https://CRAN.R-project.org/package=tolerance)
+[![Dependencies](https://tinyverse.netlify.com/badge/tolerance)](https://cran.r-project.org/package=tolerance)
+![GitHub last commit](https://img.shields.io/github/last-commit/dsy109/tolerance)
+[![Downloads](https://cranlogs.r-pkg.org/badges/HoRM?color=brightgreen)](https://www.r-pkg.org/pkg/tolerance)
+[![JSS](https://img.shields.io/badge/JSS-10.18637%2Fjss.v036.i05-brightgreen)](https://dx.doi.org/10.18637/jss.v036.i05)
+[![Handbook of Statistics](https://img.shields.io/badge/Handbook%20of%20Statistics-10.1016%2B978--0--444--63431--3.00008--5-brightgreen)](https://doi.org/10.1016/B978-0-444-63431-3.00008-5)
+
 
 ### Synopsis
 
-The [HoRM package](https://cran.r-project.org/package=HoRM) provides supplemental functions and datasets for the book [_Handbook of Regression Methods_](https://www.routledge.com/Handbook-of-Regression-Methods/Young/p/book/9781498775298) by [Derek S. Young](https://young.as.uky.edu/).  Illustrations of the datasets are included in both that textbook as well as the accompanying [Shiny app](https://horm.as.uky.edu/).
+The [tolerance package](https://cran.r-project.org/package=tolerance) provides functions for estimating tolerance limits (intervals) for various univariate distributions, Bayesian normal tolerance limits, multivariate normal tolerance regions, nonparametric tolerance intervals, tolerance bands for regression settings, and analysis of variance tolerance intervals.  Visualizations in the form of histograms, scatterplots, and control charts are also available for many of these settings.    More details about the package are included in both the original [JSS](https://dx.doi.org/10.18637/jss.v036.i05) article as well as a subsequent [Handbook of Statistics](https://doi.org/10.1016/B978-0-444-63431-3.00008-5) book chapter.
 
 Other highlights:
 
-- Includes 21 real datasets, each of which is analyzed in the book _Handbook of Regression Methods_.
+- Includes calculations for tolerance limits (intervals) for numerous continuous and discrete distributions.
 
-- Includes some original functions, such as for the regressogram and power functions for the general linear F-test.
+- Pointwise tolerance interval calculations for linear, nonlinear, nonparametric, and multivariate regression settings are available.
+
+- Functions for sample size determination in normal and nonparametric settings are available.
+
+- Includes a novel operating characteristic curve function regarding _k_-factors for tolerance intervals based on normality.
+
+- Novel nonparametric methods are included, such as the ability to construct multivariate hyperrectangular tolerance regions for setting reference regions.
 
 ### Documentation
 
-The book _Handbook of Regression Methods_ provides documentation about the HoRM package.  Moreover, the [help file](https://CRAN.R-project.org/package=HoRM) also documents the original sources for each dataset.
+the [JSS](https://dx.doi.org/10.18637/jss.v036.i05) article and the [Handbook of Statistics](https://doi.org/10.1016/B978-0-444-63431-3.00008-5) book chapter both provide documentation about the tolerance package.  Moreover, the [help file](https://CRAN.R-project.org/package=tolerance) also documents the references used for each function.
 
 ### Examples
 
-All examples in _Handbook of Regression Methods_ are demonstrated in the [Shiny app](https://horm.as.uky.edu/).
+Additional examples for the tolerance package are currently being developed for a Shiny app.
 
 ### Installation
 
-Released and tested versions of Rcpp are available via the
+Released and tested versions of tolerance are available via the
 [CRAN](https://cran.r-project.org) network, and can be installed from within R via
 
 ```R
-install.packages("HoRM")
+install.packages("tolerance")
 ```
 
 ### Support
 
-The [issue tickets at the GitHub repo](https://github.com/dsy109/HoRM/issues)
+The [issue tickets at the GitHub repo](https://github.com/dsy109/tolerance/issues)
 are the primary bug reporting interface.  As with the other web resources,
 previous issues can be searched as well.
 
 ### Authors
 
-Derek S.  Young
+Derek S. Young
 
 ### License
 
