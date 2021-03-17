@@ -7,7 +7,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/dsy109/tolerance)
 [![Downloads](https://cranlogs.r-pkg.org/badges/HoRM?color=brightgreen)](https://www.r-pkg.org/pkg/tolerance)
 [![JSS](https://img.shields.io/badge/JSS-10.18637%2Fjss.v036.i05-brightgreen)](https://dx.doi.org/10.18637/jss.v036.i05)
-[![Handbook of Statistics](https://img.shields.io/badge/Handbook%20of%20Statistics-10.1016%2B978--0--444--63431--3.00008--5-brightgreen)](https://doi.org/10.1016/B978-0-444-63431-3.00008-5)
+[![Handbook of Statistics](https://img.shields.io/badge/Handbook%20of%20Statistics-10.1016%2FB978--0--444--63431--3.00008--5-brightgreen)](https://doi.org/10.1016/B978-0-444-63431-3.00008-5)
 
 
 ### Synopsis
