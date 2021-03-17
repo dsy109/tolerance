@@ -1,0 +1,109 @@
+<html><head><title>Uniform Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>uniftol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   uniftol.int">
+<param name="keyword" value=" Uniform Tolerance Intervals">
+</object>
+
+
+<h2>Uniform Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided tolerance intervals for data distributed according to a uniform distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+uniftol.int(x, alpha = 0.05, P = 0.99, upper = NULL,
+            lower = NULL, side = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to a uniform distribution.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>upper</code></td>
+<td>
+The upper bound of the data.  When <code>NULL</code>, then the maximum of <code>x</code> is used.</td></tr>
+<tr valign="top"><td><code>lower</code></td>
+<td>
+The lower bound of the data.  When <code>NULL</code>, then the minimum of <code>x</code> is used.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>uniftol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Faulkenberry, G. D. and Weeks, D. L. (1968), Sample Size Determination for Tolerance Limits,
+<EM>Technometrics</EM>, <B>10</B>, 343&ndash;348.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 90%/90% 1-sided uniform tolerance intervals for a sample
+## of size 50 with a known lower bound of 0. 
+
+set.seed(100)
+x &lt;- runif(50, 0, 50)
+out &lt;- uniftol.int(x = x, alpha = 0.10, P = 0.90, lower = 0,
+                   side = 1) 
+out
+
+plottol(out, x, plot.type = "hist", side = "two", 
+        x.lab = "Uniform Data")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

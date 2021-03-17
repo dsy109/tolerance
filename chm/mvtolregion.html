@@ -1,0 +1,114 @@
+<html><head><title>Multivariate Normal Tolerance Regions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>mvtol.region(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   mvtol.region">
+<param name="keyword" value=" Multivariate Normal Tolerance Regions">
+</object>
+
+
+<h2>Multivariate Normal Tolerance Regions</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Determines the appropriate tolerance factor for computing multivariate normal tolerance regions based on Monte Carlo simulation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mvtol.region(x, alpha = 0.05, P = 0.99, B = 1000)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+An <code>n</code>x<code>p</code> matrix of data assumed to be drawn from a <code>p</code>-dimensional multivariate normal
+distribution.  <code>n</code> pertains to the sample size.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.  A vector of <code>alpha</code> values
+may be specified.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance region.  A vector <code>P</code> values may be
+specified.</td></tr>
+<tr valign="top"><td><code>B</code></td>
+<td>
+The number of iterations used for the Monte Carlo algorithm which determines the tolerance factor.  The number of
+iterations should be at least as large as the default value of 1000.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+A basic sketch of how the algorithm works is as follows:
+</p>
+<p>
+(1) Generate independent chi-square random variables and Wishart random matrices.
+</p>
+<p>
+(2) Compute the eigenvalues of the randomly generated Wishart matrices.
+</p>
+<p>
+(3) Iterate the above steps to generate a set of <code>B</code> sample values such that the <code>100(1-alpha)</code>-th percentile is an approximate tolerance factor.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>mvtol.region</code> returns a matrix where the rows pertain to each confidence level <code>1-alpha</code> specified and the columns
+pertain to each proportion level <code>P</code> specified.</p>
+
+<h3>References</h3>
+
+<p>
+Krishnamoorthy, K. and Mondal, S. (2006), Improved Tolerance Factors for Multivariate Normal Distributions, 
+<EM>Communications in Statistics - Simulation and Computation</EM>, <B>35</B>, 461&ndash;478.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 90%/90% bivariate normal tolerance region. 
+
+set.seed(100)
+x1 &lt;- rnorm(100, 0, 0.2)
+x2 &lt;- rnorm(100, 0, 0.5)
+x &lt;- cbind(x1, x2)
+
+out1 &lt;- mvtol.region(x = x, alpha = 0.10, P = 0.90, B = 1000)
+out1
+plottol(out1, x)
+
+## 90%/90% trivariate normal tolerance region. 
+
+set.seed(100)
+x1 &lt;- rnorm(100, 0, 0.2)
+x2 &lt;- rnorm(100, 0, 0.5)
+x3 &lt;- rnorm(100, 5, 1)
+x &lt;- cbind(x1, x2, x3)
+mvtol.region(x = x, alpha = c(0.10, 0.05, 0.01), 
+             P = c(0.90, 0.95, 0.99), B = 1000) 
+
+out2 &lt;- mvtol.region(x = x, alpha = 0.10, P = 0.90, B = 1000) 
+out2
+plottol(out2, x)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

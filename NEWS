@@ -1,0 +1,411 @@
+ Changes in tolerance Version 2.0.1
+============================
+* 2021-XX-XX
+
+* Updated ddiffprop() and pdiffprop() functions using an interpolation procedure.  While the routines are
+ slower, they now avoid some numerical overflow issues from before.  Thanks to Gustaf Rydevik for
+ pointing out this error.
+ 
+* Fixed incorrect handling of the upper and lower arguments in the npbetol.int() function.
+ 
+* Updated documentation.
+
+
+ Changes in tolerance Version 2.0.0
+============================
+* 2020-02-04
+
+* Fixed compatibility issues with R 4.0.0.
+
+* Substantial changes made to mvregtol.region().  This function no longer depends on inputted y and x 
+ matrices, but rather a new mvreg argument, which is of class "mlm", is required.  Moreover, the int
+ argument for specifying an intercept is deprecated as the inclusion/exclusion of an intercept is 
+ identified through the formula used for the fit of the mvreg object.
+ 
+* Fixed multiple problems with regtol.int() in order to calculate tolerance intervals for the regression through
+ the origin model, a model with interactions, and polynomial regression.  Thanks to Tian Liu and
+ Aisaku Nakamura for suggestions.
+ 
+* Added npbetol.int() function for calculating nonparametric beta-expectation tolerance intervals.
+
+* Modified pnyhper() function to make it more efficient.  Thanks to Jerry Lewis for this
+ suggestion.
+ 
+* Fixed bug in norm.ss() function for the "DIR" method.  The "sig2.0" hyperparameter was 
+ treated as the standard deviation, but now has been corrected to reflect the variance.
+ Thanks to David Whiting and John Szumiloski for pointing out this bug.
+ 
+* Modified the logistol.int() function to use the method of moments estimators in extreme cases
+ when the MLEs cannot be numerically calculated.
+ 
+* Modified the gamtol.int() function so that the calculation can be performed when the
+ observed data are very small.  Thanks to Kevin Bright for pointing out this error.
+ 
+* Fixed bug in nptol.int() function for the "YM" option when P is very small.  Thanks to
+ Karen Byron for pointing this out.
+ 
+* Revised some of the documentation for the Zipf-Mandelbrot distributions, courtesy of a 
+ good suggestion by Jan Kardaun.
+ 
+* Updated some references.
+
+
+Changes in tolerance Version 1.3.0
+============================
+* 2017-02-03
+
+* Updated "Title" and "Description" to reflect new CRAN policies.
+
+* Added an error message if a vector of length less than 2 is used for the data argument in
+ nptol.int().  Thanks to Maxim Nazarov for the suggestion.
+ 
+* Fixed bug in dnhyper() for case where x=0.  Thanks to Jerry Lewis for reporting this bug.
+
+* Added functions for constructing simultaneous tolerance limits for normal populations.  This includes a 
+ k-factor function [K.factor.sim()] and a function to construct the simultaneous normal tolerance limits
+ [simnormtol.int()].  Thanks to Andrew Landgraf for providing his code for the K.factor.sim() function.
+ 
+* Updated some references.
+
+
+Changes in tolerance Version 1.2.0
+============================
+* 2016-02-17
+
+* Added functions for the discrete Pareto distribution.  This includes distribution functions [ddpareto(), pdpareto(), 
+ qdpareto(), and rdpareto()], a maximum likelihood function [dpareto.ll()], and a function for calculating approximate
+ tolerance intervals [dparetotol.int()].  Thanks to Mehran Naghizadeh Qomi and Azadeh Kiapour for initial versions of these
+ functions and for thoroughly testing the final functions.
+ 
+* Fixed issue with loading stats4 package for the zm.ll() and poislind.ll() functions.
+
+* Added norm.OC(), a function for producing OC-type curves to illustrate how values of the k-factors for normal tolerance intervals, 
+ confidence levels, and content levels change as a function of the sample size.
+ 
+* Corrected error in anovatol.int() function.  The k-factor calculation in the previous version used an incorrect value for the 
+ degrees of freedom in the formula.
+ 
+* Fixed typo in norm.ss() documentation.
+
+* Modified K.table() code to allow user to specify any of the ways to compute the underlying normal k-factors.
+
+* Modified regolt.int() code to allow predictions when weighting is used.
+
+* Fixed typos in dpoislind() and ppoislind() functions regarding the logarithm options.
+
+
+Changes in tolerance Version 1.1.1
+============================
+* 2015-12-11 
+
+* Added bayesnormtol.int(), a function to construct Bayesian normal tolerance intervals.
+
+* Added norm.ss(), a function with various strategies for sample size determination using normal tolerance intervals.
+
+* Updated some references.
+
+
+Changes in tolerance Version 1.1.0
+============================
+* 2015-04-15 
+
+* Added functions for the discrete Poisson-Lindley distribution.  This includes distribution functions [dpoislind(), ppoislind(), 
+ qpoislind(), and rpoislind()], a maximum likelihood function [poislind.ll()], and a function for calculating approximate
+ tolerance intervals [poislindtol.int()].
+ 
+* In the K.factor() function, the upper limit in the integrate function for the "EXACT" method was changed
+ from 10 to 5.  A numerical error would sometimes occur for extreme values of alpha, which appears to be
+ fixed by this change.  If any errors pertaining to the integrate function are obtained because of this
+ change, please contact me and I will try to dig into this further.
+
+
+Changes in tolerance Version 1.0.0
+============================
+* 2014-09-03 
+
+* Fixed small bug in the qnhyper() function.  Fixed an incorrect assignment in the dnyhper()
+ and the pnhyper() functions.
+ 
+* Added the "EX" option for an exact method calculation in the neghypertol.int() function.
+
+* Added the "EX" option for an exact method calculation and fixed how lower and upper bounds 
+ were defined in the hypertol.int() function. 
+ 
+* Added the "YM" method to nptol.int(), which is the Young-Mathew method for improved nonparametric 
+ tolerance intervals based on interpolated and extrapolated order statistics.
+ 
+* Updated some documentation.
+
+* Updated my contact e-mail as maintainer.
+
+
+Changes in tolerance Version 0.5.3
+============================
+* 2013-10-11 
+
+* Updated the "OCT" option in the K.factor() function to allow the user to use the degrees of
+ freedom option, "f".
+ 
+* Fixed a bug in the bonftol.int() function.  The "alpha" argument was not passed correctly to
+ the type of tolerance interval being calculated.  Thanks to Alson Look for reporting this bug.
+ 
+* Updated references.
+
+
+Changes in tolerance Version 0.5.2
+============================
+* 2012-09-23 
+
+* The mvtol.region() function was updated to include many different ways to approximate the tolerance factor for
+ multivariate normal data.  These were mainly included for comparative purposes.  The default method ("KM") is the 
+ Krishnamoorthy-Mondal method, which was the method used in all previous versions of the 'tolerance' package.
+ 
+* Fixed a bug in the K.table() function.  When summarizing by "n", the wrong indexing was used, thus yielding
+ incorrect results.
+
+
+Changes in tolerance Version 0.5.1
+============================
+* 2012-08-28 
+
+* The functions related to Zipf-Mandelbrot distributions have been updated. The distribution functions (i.e.,
+ qzipfman, pzipfman, dzipfman, and rzipfman) have all been updated to be more efficient.  Moreover, there were
+ some computational issues for extreme quantiles in these functions.  Namely, negative density values would
+ be returned.  There have been corrections for these bugs, plus I have included an interpolation procedure
+ when calculating very large quantities for the zeta distribution.  Deleted the "exact" option in the respective functions.
+ 
+* The zipftol.int function has been updated to include the changes in the distribution functions.  There is
+ also a new argument that allows the user to specify how to handle ties.  Namely, if the limit is calculated at
+ a category that has the same frequency as other adjacent categories, then you can either take the most extreme of those
+ tied categories (which would be the lowest of the tied categories for the lower limit and the highest of the tied categories
+ for the upper limit) or simply take the category that was estimated by the procedure.  This latter approach would only be used
+ if there is some scientific knowledge that could basically guide the user with setting an ordinal ranking of the tied
+ categories.
+
+
+Changes in tolerance Version 0.5.0
+============================
+* 2012-07-19 
+
+* Added code for using a fiducial approach to estimate tolerance intervals for the function of 
+ two binomial proportions (fidbintol.int), two Poisson rates (fidpoistol.int), and two negative binomial
+ proportions (fidnegbintol.int).
+ 
+* Added three new options for estimating the two-sided K-factor for the normal setting: one due
+ to Howe, one due to Krishnamoorthy and Mathew, and one for controlling the tail probabilities.  
+ The exact method has also been made more efficient.  Also, corrected a small error in the normtol.int 
+ function that did not allow the user to call all of the possible methods as cited in the documentation.
+ The K.factor() function was also vectorized to accommodate a vector of sample sizes.
+ 
+* Added a function that calculates Appell's hypergeometric function of the first
+ kind (F1), distribution functions for the difference between two proportions (qdiffprop,
+ pdiffprop, ddiffprop, and rdiffprop), and code for estimating tolerance intervals for the
+ difference between two proportions using a fiducial-based approach (diffproptol.int). 
+ 
+* Condensed the Zipf, Zipf-Mandelbrot, and zeta distribution functions into
+ the qzipfman, pzipfman, dzipfman, and rzipfman functions.  This simultaneously
+ corrected a minor bug in the original distribution functions of the three distributions.
+ Searches on any of these distributions will now point to these new functions.  Future work will
+ likely be done on these functions to make them more efficient.
+ 
+* Added distribution functions (i.e., density, cumulative distribution,
+ quantile, and random generation) for the negative hypergeometric
+ distribution.
+ 
+* Added the Krishnamoorthy-Mathew approach for computing the upper tolerance bound for the 2-parameter
+ exponential distribution.
+ 
+* Added neghypertol.int() function for calculating tolerance limits for
+ negative hypergeometric random variables.
+ 
+* Added hypertol.int() function for calculating tolerance limits for
+ hypergeometric random variables.
+ 
+* Added new options for how the confidence intervals for the
+ binomial proportions are calculated in the bintol.int function.
+ Specifically, the methods "PR", "PO", "CL", "CC", and "CWS" have been added,
+ which are for the probit transformation, Poisson parameterization,
+ complementary log transformation, continuity corrected large sample approach,
+ and continuity corrected Wilson's approach, respectively.
+ 
+* Added new options for how the confidence intervals for the
+ Poisson rates are calculated in the poistol.int function.
+ Specifically, the methods "CC", "VS", "RVS", "FT", and "CSC" have been added,
+ which are for the continuity corrected large sample approach, the variance-
+ stabilization approach, the recentered variance stabilization approach, the
+ Freeman-Tukey method, and the continuity corrected score method, respectively.
+ 
+* Completely overhauled the negbintol.int function, which was
+ not providing good estimates.  The new version provides many
+ ways to estimate the negative binomial proportion confidence intervals,
+ similar to how the binomial and Poisson tolerance limits are constructed.
+ An article has also been submitted outlining the procedure.
+ 
+* The use of the ppois function was misspecified for the lower
+ tolerance limit in the poistol.int function.  This resulted in the 
+ reported lower limit being larger by 1 value.  This has been 
+ corrected.
+ 
+* Fixed the umatol.int function to allow the case of x = 0.
+
+* Fixed a small typo in the negbintol.int documentation.
+
+* Put maximum tolerance limits for the discrete distributions at Inf
+ instead of 0.
+
+
+Changes in tolerance Version 0.4.0
+============================
+* 2011-12-07 
+
+* Added negbintol.int() function for calculating tolerance limits for
+ negative binomial random variables.
+ 
+* Updated poistol.int() to also include the score method as a way to 
+ estimate the tolerance limits.
+ 
+* Added distribution functions (i.e., density, cumulative distribution,
+ quantile, and random generation) for zeta, Zipf, and Zipf-Mandelbrot
+ distributions.
+ 
+* Added zm.ll() function for estimation of the shape parameter(s) in the
+ zeta, Zipf, and Zipf-Mandelbrot distributions.
+ 
+* Added zipftol.int() function for calculating tolerance intervals for the
+ zeta, Zipf, and Zipf-Mandelbrot distributions.
+ 
+* Corrected bug in p2exp() and q2exp() functions.
+
+* Corrected how the output is displayed for the nptol.int()
+ function when method="HM".
+ 
+* Fixed rounding error in the acc.samp() function and added
+ clarifying text in the acc.samp() documentation.
+ 
+* Fixed estimation issue in exttol.int() function.  The Newton-Raphson
+ algorithm had an error when parameter values were relatively large.
+
+
+Changes in tolerance Version 0.3.0
+============================
+* 2011-04-03 
+
+* Changed the output for regtol.int(), nlregtol.int(),
+ and npregtol.int() from class "matrix" to "data.frame".
+ 
+* Updated K.factor() to also include the option method="EXACT",
+ which does an exact calculation of two-sided k-factors
+ by numerically solving the necessary integral calculation.
+ 
+* Reflected the new exact method for calculating the k-factors
+ above in the gamtol.int() and anovatol.int() functions.
+ 
+* The function bonftol.int() was added to approximate two-sided
+ tolerance intervals that control the proportion of the population
+ in the tails.
+ 
+* The function diffnormtol.int() was added for calculating one-sided
+ tolerance limits for the difference between two independent
+ normal random variables.  An exact calculation is performed when
+ the variance ratio is known, while various estimation methods are
+ used when the variance ratio is unknown.
+ 
+* Updated references.
+
+
+Changes in tolerance Version 0.2.3
+============================
+* 2010-10-07 
+
+* Corrected acc.samp() function so that the output is of class
+ "matrix".
+ 
+* Changed the exp2tol.int() function so that it does not
+ automatically truncate the lower tolerance limit at 0.
+ 
+* The function paretotol.int() was added to estimate tolerance
+ intervals for the Pareto distribution as well as the power
+ distribution.
+
+
+Changes in tolerance Version 0.2.2
+============================
+* 2010-07-30 
+
+* Updated references.
+
+* Fixed minor typos in documentation.
+
+
+Changes in tolerance Version 0.2.1
+============================
+* 2010-05-16 
+
+* Started a "NEWS" file for changes in the package.
+
+* Changed the way the k-factor for the two-sided linear and
+ nonlinear regression tolerance intervals are calculated.  Before,
+ an approximation was used.  A more accurate method (presented at the
+ bottom of p. 70 of Krishnamoorthy and Mathew (2009)) is used.
+ 
+* Fixed a serious bug with the way nlregtol.int() checks that
+ the pseudo-design matrix is, in fact, invertible.
+ 
+* The function mvregtol.region() was added to estimate multivariate
+ multiple linear regression tolerance factors.
+
+
+Changes in tolerance Version 0.2.0
+============================
+* 2010-05-02 
+
+* New function anovatol.int() performs tolerance interval
+ calculations for balanced ANOVA.
+ 
+* New function np.order() performs sample size determination
+ for tolerance limits based on order statistics.
+ 
+* New function umatol.int() performs uniformly most accurate
+ upper tolerance limits for the Poisson, binomial, and negative
+ binomial distributions.
+ 
+* Updated K.factor() to also include the option method="ELL"
+ for the Ellison correction method.
+ 
+* Updated acc.samp() to include the option RQL.  Documentation
+ has also been updated to provide more detailed explanations of the
+ function's arguments.
+ 
+* Updated exttol.int() to also perform calculations for the
+ Gumbel distribution for the maximum.  Before, this function only
+ did calculations for the Weibull distribution and the Gumbel
+ distribution for the minimum.
+ 
+* The portion of code for gammatol.int() when side=2 was
+ incorrect.  It has now been corrected.
+ 
+* laptol.int(), logistol.int(), uniftol.int(), and
+ exttol.int() all now include the option side=2 to estimate
+ two-sided tolerance intervals.  The option simply calculates a
+ Bonferroni approximation for the two-sided setting.
+ 
+* uniftol.int() has now been written to for the general
+ uniform case and not simply for the setting where the distribution
+ has a lower bound of 0.
+ 
+* plottol() has been updated so that pch=19 is used by default
+ for all of the scatterplots.  It also includes functionality for a
+ plot pertaining to output from the new anovatol.int() function.
+ 
+* Fixed minor typos in the documentation (e.g., the Poisson
+ tolerance intervals documentation originally said "Poison").
+ 
+* Added some additional references to some of the
+ documentation.
+
+
+Changes in tolerance Version 0.1.0
+============================
+* 2009-06-29 
+
+* The 'tolerance' package is officially launched.

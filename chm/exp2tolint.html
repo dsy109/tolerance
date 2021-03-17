@@ -1,0 +1,128 @@
+<html><head><title>2-Parameter Exponential Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>exp2tol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   exp2tol.int">
+<param name="keyword" value=" 2-Parameter Exponential Tolerance Intervals">
+</object>
+
+
+<h2>2-Parameter Exponential Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided tolerance intervals for data distributed according to a 2-parameter
+exponential distribution.  Data with Type II censoring is permitted.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+exp2tol.int(x, alpha = 0.05, P = 0.99, side = 1,
+            method = c("GPU", "DUN"), type.2 = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to the 2-parameter exponential distribution.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+The method for how the upper tolerance bound is approximated.  <code>"GPU"</code> is the
+Guenther-Patil-Upppuluri method. <code>"DUN"</code> is the Dunsmore method, which was empirically shown to be an improvement
+for samples greater than or equal to 8.  More information on these methods can be found in the "References".</td></tr>
+<tr valign="top"><td><code>type.2</code></td>
+<td>
+Select <code>TRUE</code> if Type II censoring is present (i.e., the data set is censored at the maximum
+value present).  The default is <code>FALSE</code>.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>exp2tol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Dunsmore, I. R. (1978), Some Approximations for Tolerance Factors for the Two Parameter Exponential Distribution,
+<EM>Technometrics</EM>, <B>20</B>, 317&ndash;318.
+</p>
+<p>
+Engelhardt, M. and Bain, L. J. (1978), Tolerance Limits and Confidence Limits on Reliability for the Two-Parameter
+Exponential Distribution, <EM>Technometrics</EM>, <B>20</B>, 37&ndash;39.
+</p>
+<p>
+Guenther, W. C., Patil, S. A., and Uppuluri, V. R. R. (1976), One-Sided <i>&beta;</i>-Content Tolerance Factors
+for the Two Parameter Exponential Distribution, <EM>Technometrics</EM>, <B>18</B>, 333&ndash;340.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="2ParExponential.html">TwoParExponential</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 95%/90% 1-sided 2-parameter exponential tolerance intervals
+## for a sample of size 50. 
+
+set.seed(100)
+x &lt;- r2exp(50, 6, shift = 55)
+out &lt;- exp2tol.int(x = x, alpha = 0.05, P = 0.90, side = 1,
+                   method = "DUN", type.2 = FALSE)
+out
+
+plottol(out, x, plot.type = "both", side = "upper", 
+        x.lab = "2-Parameter Exponential Data")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

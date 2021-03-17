@@ -1,0 +1,121 @@
+<html><head><title>Multivariate (Multiple) Linear Regression Tolerance Regions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>mvregtol.region(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   mvregtol.region">
+<param name="keyword" value=" Multivariate (Multiple) Linear Regression Tolerance Regions">
+</object>
+
+
+<h2>Multivariate (Multiple) Linear Regression Tolerance Regions</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Determines the appropriate tolerance factor for computing multivariate (multiple) linear regression tolerance regions based on Monte Carlo simulation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mvregtol.region(y, x, new.x = NULL, int = TRUE, alpha = 0.05, 
+                P = 0.99, B = 1000)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>y</code></td>
+<td>
+An <code>n</code>x<code>q</code> matrix of responses assumed to be drawn from a <code>q</code>-dimensional multivariate normal
+distribution.  <code>n</code> pertains to the sample size.</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+An <code>n</code>x<code>m</code> matrix of predictors (i.e., the design matrix). <code>m</code> pertains to the number of predictors. Do NOT include a column of
+1's if assuming an intercept.  This is controlled by the <code>int</code> argument.</td></tr>
+<tr valign="top"><td><code>new.x</code></td>
+<td>
+A matrix of new values for which to approximate k-factors. This must be a matrix with <code>m</code> columns.</td></tr>
+<tr valign="top"><td><code>int</code></td>
+<td>
+If <code>int = TRUE</code>, then an intercept is assumed.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance region.</td></tr>
+<tr valign="top"><td><code>B</code></td>
+<td>
+The number of iterations used for the Monte Carlo algorithm which determines the tolerance factor.  The number of
+iterations should be at least as large as the default value of 1000.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+A basic sketch of how the algorithm works is as follows:
+</p>
+<p>
+(1) Generate independent chi-square random variables and Wishart random matrices.
+</p>
+<p>
+(2) Compute the eigenvalues of the randomly generated Wishart matrices.
+</p>
+<p>
+(3) Iterate the above steps to generate a set of <code>B</code> sample values such that the <code>100(1-alpha)</code>-th percentile is an approximate tolerance factor.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>mvregtol.region</code> returns a matrix where the first column is the k-factor, the next <code>q</code> columns are the estimated responses
+from the least squares fit, and the final <code>m</code> columns are the predictor values.  The first <code>n</code> rows of the matrix pertain to the raw data
+as specified by <code>y</code> and <code>x</code>.  If values for <code>new.x</code> are specified, then there is one additional row appended to this output for each
+row in the matrix <code>new.x</code>.</p>
+
+<h3>References</h3>
+
+<p>
+Anderson, T. W. (2003) <EM>An Introduction to Multivariate Statistical Analysis</EM>, Third Edition, Wiley.
+</p>
+<p>
+Krishnamoorthy, K. and Mathew, T. (2009), <EM>Statistical Tolerance Regions: Theory, Applications, and Computation</EM>, Wiley.
+</p>
+<p>
+Krishnamoorthy, K. and Mondal, S. (2008), Tolerance Factors in Multiple and Multivariate Linear Regressions, 
+<EM>Communications in Statistics - Simulation and Computation</EM>, <B>37</B>, 546&ndash;559.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 95%/95% multivariate regression tolerance factors using
+## a fertilizer data set presented in Anderson (2003, p. 374). 
+
+grain &lt;- c(40, 17, 9, 15, 6, 12, 5, 9)
+straw &lt;- c(53, 19, 10, 29, 13, 27, 19, 30)
+fert &lt;- c(24, 11, 5, 12, 7, 14, 11, 18)
+Y &lt;- cbind(grain, straw)
+X &lt;- cbind(fert)
+new.x &lt;- c(10, 15, 20)
+
+set.seed(100)
+out &lt;- mvregtol.region(Y, X, new.x, int = TRUE, alpha = 0.05,
+                       P = 0.95, B = 5000)
+out
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,132 @@
+<html><head><title>(Multiple) Linear Regression Tolerance Bounds</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>regtol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   regtol.int">
+<param name="keyword" value=" (Multiple) Linear Regression Tolerance Bounds">
+</object>
+
+
+<h2>(Multiple) Linear Regression Tolerance Bounds</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided (multiple) linear regression tolerance bounds.  It is also possible to fit a 
+regression through the origin model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+regtol.int(reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99) 
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>reg</code></td>
+<td>
+An object of class <code>lm</code> (i.e., the results from a linear regression routine).</td></tr>
+<tr valign="top"><td><code>new.x</code></td>
+<td>
+Any new levels of the predictor(s) for which to report the tolerance bounds.  The number of columns must equal
+the number of predictors appearing on the right-hand side of the model in <code>reg</code>.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance bound is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by the tolerance bound(s).</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>regtol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by the tolerance bound(s).</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+The value of the response given on the left-hand side of the model in <code>reg</code>.</td></tr>
+<tr valign="top"><td><code>y.hat</code></td>
+<td>
+The predicted value of the response for the fitted linear regression model.  This data frame is sorted by
+this value.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Wallis, W. A. (1951), Tolerance Intervals for Linear Regression, in <EM>Second Berkeley Symposium on Mathematical
+Statistics and Probability</EM>, ed. J. Neyman, Berkeley: University of CA Press, 43&ndash;51.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('VGAM', 'notdocumentedyet.html')" style="text-decoration: underline; color: blue; cursor: hand">lm</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 95%/95% 2-sided linear regression tolerance bounds
+## for a sample of size 100. 
+
+set.seed(100)
+x &lt;- runif(100, 0, 10)
+y &lt;- 20 + 5*x + rnorm(100, 0, 3)
+out &lt;- regtol.int(reg = lm(y ~ x), new.x = cbind(c(3, 6, 9)), 
+                  side = 2, alpha = 0.05, P = 0.95)
+out
+
+plottol(out, x = cbind(1, x), y = y, side = "two", x.lab = "X", 
+        y.lab = "Y")
+
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

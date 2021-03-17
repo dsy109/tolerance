@@ -1,0 +1,30 @@
+# Default NAMESPACE created by R
+# Remove the previous line if you edit this file
+
+# Export all names
+exportPattern(".")
+
+# Import all packages listed as Imports or Depends
+import(
+  MASS,
+  rgl,
+  stats4
+)
+
+# Import from
+importFrom("graphics", "abline", "axis", "hist", "lines", "par",
+  "points", "segments", "title", "legend", "rect")
+importFrom("grDevices", "colors", "dev.new")
+importFrom("stats", "IQR", "anova", "as.formula", "cov", "dbinom",
+  "dcauchy", "dchisq", "deriv", "dgamma", "dlogis", "dnbinom",
+  "dnorm", "fitted", "integrate", "lm", "median", "nlm",
+  "nls", "optim", "pbeta", "pbinom", "pchisq", "phyper",
+  "pnorm", "predict", "qbeta", "qbinom", "qcauchy", "qchisq",
+  "qf", "qgamma", "qhyper", "qlogis", "qnbinom", "qnorm",
+  "qpois", "qt", "quantile", "rbeta", "rbinom", "rchisq",
+  "rexp", "rnbinom", "rnorm", "rpois", "runif", "sd",
+  "uniroot", "var", "approx", "dhyper", "model.matrix"
+)
+importFrom(
+  "utils", "tail"
+)

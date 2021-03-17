@@ -1,0 +1,137 @@
+<html><head><title>Acceptance Sampling</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>acc.samp(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   acc.samp">
+<param name="keyword" value=" Acceptance Sampling">
+</object>
+
+
+<h2>Acceptance Sampling</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides an upper bound on the number of acceptable rejects or nonconformities in a process.  This is similar
+to a 1-sided upper tolerance bound for a hypergeometric random variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+acc.samp(n, N, alpha = 0.05, P = 0.99, AQL = 0.01, RQL = 0.02)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+The sample size to be drawn from the inventory.</td></tr>
+<tr valign="top"><td><code>N</code></td>
+<td>
+The total inventory (or lot) size.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<code>1-alpha</code> is the confidence level for bounding the probability of accepting the inventory.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of items in the inventory which are to be accountable.</td></tr>
+<tr valign="top"><td><code>AQL</code></td>
+<td>
+The acceptable quality level, which is the largest proportion of defects in a process considered
+acceptable. Note that <code>0 &lt; AQL &lt; 1</code>.</td></tr>
+<tr valign="top"><td><code>RQL</code></td>
+<td>
+The rejectable quality level, which is the largest proportion of defects in an independent lot
+that one is willing to tolerate. Note that <code>AQL &lt; RQL &lt; 1</code>.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>acc.samp</code> returns a matrix with the following quantities:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>acceptance.limit</code></td>
+<td>
+The number of items in the sample which may be unaccountable, yet still be able to 
+attain the desired confidence level <code>1-alpha</code>.</td></tr>
+<tr valign="top"><td><code>lot.size</code></td>
+<td>
+The total inventory (or lot) size <code>N</code>.</td></tr>
+<tr valign="top"><td><code>confidence</code></td>
+<td>
+The confidence level <code>1-alpha</code>.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of accountable items specified by the user.</td></tr>
+<tr valign="top"><td><code>AQL</code></td>
+<td>
+The acceptable quality level as specified by the user.  If the sampling were to be repeated numerous times as a process, then
+this quantity specifies the proportion of missing items considered acceptable from the process as a whole.  Conditioning on the
+calculated value for <code>acceptance.limit</code>, the <code>AQL</code> is used to estimate the producer's risk (see <code>prod.risk</code> below).</td></tr>
+<tr valign="top"><td><code>RQL</code></td>
+<td>
+The rejectable quality level as specified by the user.  This is the proportion of individual items in a sample one is willing
+to tolerate missing. Conditioning on the calculated value for <code>acceptance.limit</code>, the <code>RQL</code> is used to estimate the consumer's risk (see <code>cons.risk</code> below).</td></tr>
+<tr valign="top"><td><code>sample.size</code></td>
+<td>
+The sample size drawn as specified by <code>n</code>.</td></tr>
+<tr valign="top"><td><code>prod.risk</code></td>
+<td>
+The producer's risk at the specified <code>AQL</code>.  This is the probability of rejecting an audit of a good inventory (also
+called the Type I error).  A good inventory can be rejected if an unfortunate random sample is selected (e.g.,
+most of the missing items happened to be selected for the audit).  <code>1-prod.risk</code> gives the confidence level of this 
+sampling plan for the specified <code>AQL</code> and <code>RQL</code>.  If it is lower than the confidence level desired (e.g., because the <code>AQL</code> is too high), then a warning message will be displayed.</td></tr>
+<tr valign="top"><td><code>cons.risk</code></td>
+<td>
+The consumer's risk at the specified <code>RQL</code>.  This is the probability of accepting an audit of a bad inventory (also
+called the Type II error).  A bad inventory can be accepted if a fortunate random sample is selected (e.g., most of the missing
+items happened to not be selected for the audit).</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Montgomery, D. C. (2005), <EM>Introduction to Statistical Quality Control</EM>, Fifth Edition, John Wiley &amp; Sons, Inc.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'Hypergeometric.html')" style="text-decoration: underline; color: blue; cursor: hand">Hypergeometric</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## A 90%/90% acceptance sampling plan for a sample of 450 
+## drawn from a lot size of 960.
+
+acc.samp(n = 450, N = 960, alpha = 0.10, P = 0.90, AQL = 0.07,
+         RQL = 0.10)
+ </pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.3.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

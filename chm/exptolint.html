@@ -1,0 +1,126 @@
+<html><head><title>Exponential Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>exptol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   exptol.int">
+<param name="keyword" value=" Exponential Tolerance Intervals">
+</object>
+
+
+<h2>Exponential Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided tolerance intervals for data distributed according to an
+exponential distribution.  Data with Type II censoring is permitted.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+exptol.int(x, alpha = 0.05, P = 0.99, side = 1, type.2 = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to an exponential distribution.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>type.2</code></td>
+<td>
+Select <code>TRUE</code> if Type II censoring is present (i.e., the data set is censored at the maximum
+value present).  The default is <code>FALSE</code>.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>exptol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>lambda.hat</code></td>
+<td>
+The mean of the data (i.e., <code>1/rate</code>).</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Blischke, W. R. and Murthy, D. N. P. (2000), <EM>Reliability: Modeling, Prediction, and Optimization</EM>,
+John Wiley &amp; Sons, Inc.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'Exponential.html')" style="text-decoration: underline; color: blue; cursor: hand">Exponential</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 95%/99% 1-sided exponential tolerance intervals for a
+## sample of size 50. 
+
+set.seed(100)
+x &lt;- rexp(100, 0.004)
+out &lt;- exptol.int(x = x, alpha = 0.05, P = 0.99, side = 1,
+                  type.2 = FALSE)
+out
+
+plottol(out, x, plot.type = "both", side = "lower", 
+        x.lab = "Exponential Data")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.3.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

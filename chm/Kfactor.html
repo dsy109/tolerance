@@ -1,0 +1,146 @@
+<html><head><title>Estimating K-factors for Tolerance Intervals Based on Normality</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>K.factor(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   K.factor">
+<param name="keyword" value=" Estimating K-factors for Tolerance Intervals Based on Normality">
+</object>
+
+
+<h2>Estimating K-factors for Tolerance Intervals Based on Normality</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Estimates k-factors for tolerance intervals based on normality.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+K.factor(n, f = NULL, alpha = 0.05, P = 0.99, side = 1, 
+         method = c("HE", "WBE", "ELL", "EXACT"), m = 50)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+The (effective) sample size.</td></tr>
+<tr valign="top"><td><code>f</code></td>
+<td>
+The number of degrees of freedom associated with calculating the estimate of the population standard deviation.
+If <code>NULL</code>, then <code>f</code> is taken to be <code>n-1</code>.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by the tolerance interval.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+The method for calculating the k-factors.  The k-factor for the 1-sided tolerance intervals
+is performed exactly and thus is the same for the chosen method.  <code>"HE"</code> is the
+Howe method and is often viewed as being extremely accurate, even for small sample sizes. <code>"WBE"</code> is the 
+Weissberg-Beatty method (sometimes called the Wald-Wolfowitz method), which performs similarly to the Howe method for larger sample sizes. <code>"ELL"</code> is
+the Ellison correction to the Weissberg-Beatty method when <code>f</code> is appreciably larger than <code>n^2</code>. A warning
+message is displayed if <code>f</code> is not larger than <code>n^2</code>. <code>"EXACT"</code> computes the k-factor exactly by finding the integral solution to the
+problem via the <code>integrate</code> function.  Note the computation time of this method is largely determined by <code>m</code>.</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+The maximum number of subintervals to be used in the <code>integrate</code> function.  This is necessary only for <code>method = "EXACT"</code>.  The larger
+the number, the more accurate the solution.  Too low of a value can result in an error.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>K.factor</code> returns the k-factor for tolerance intervals based on normality with the arguments specified above.</p>
+
+<h3>Note</h3>
+
+<p>
+For larger sample sizes, there may be some accuracy issues with the 1-sided calculation since it depends on the noncentral t-distribution.  
+The code is primarily intended to be used for moderate values of the noncentrality parameter. It will not be highly accurate, especially in the tails, for large values.
+See <code><a onclick="findlink('stats', 'TDist.html')" style="text-decoration: underline; color: blue; cursor: hand">TDist</a></code> for further details.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Ellison, B. E. (1964), On Two-Sided Tolerance Intervals for a Normal Distribution, <EM>Annals of Mathematical
+Statistics</EM>, <B>35</B>, 762&ndash;772.
+</p>
+<p>
+Howe, W. G. (1969), Two-Sided Tolerance Limits for Normal Populations - Some Improvements, <EM>Journal of the
+American Statistical Association</EM>, <B>64</B>, 610&ndash;620.
+</p>
+<p>
+Krishnamoorthy, K. and Mathew, T. (2009), <EM>Statistical Tolerance Regions: Theory, Applications, and Computation</EM>, Wiley.
+</p>
+<p>
+Odeh, R. E. and Owen, D. B. (1980), <EM>Tables for Normal Tolerance Limits, Sampling Plans, and Screening</EM>, Marcel-Dekker.
+</p>
+<p>
+Wald, A. and Wolfowitz, J. (1946), Tolerance Limits for a Normal Distribution, <EM>Annals of the Mathematical Statistics</EM>,
+<B>17</B>, 208&ndash;215.  
+</p>
+<p>
+Weissberg, A. and Beatty, G. (1969), Tables of Tolerance Limit Factors for Normal Distributions, <EM>Technometrics</EM>,
+<B>2</B>, 483&ndash;500.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'integrate.html')" style="text-decoration: underline; color: blue; cursor: hand">integrate</a></code>, <code><a href="Ktable.html">K.table</a></code>, <code><a href="normtolint.html">normtol.int</a></code>, <code><a onclick="findlink('stats', 'TDist.html')" style="text-decoration: underline; color: blue; cursor: hand">TDist</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## Showing the effect of the Howe, Weissberg-Beatty, 
+## and exact estimation methods as the sample size increases.
+
+K.factor(10, P = 0.95, side = 2, method = "HE")
+K.factor(10, P = 0.95, side = 2, method = "WBE")
+K.factor(10, P = 0.95, side = 2, method = "EXACT", m = 5)
+
+K.factor(100, P = 0.95, side = 2, method = "HE")
+K.factor(100, P = 0.95, side = 2, method = "WBE")
+K.factor(100, P = 0.95, side = 2, method = "EXACT", m = 5)
+
+K.factor(1000, P = 0.95, side = 2, method = "HE")
+K.factor(1000, P = 0.95, side = 2, method = "WBE")
+K.factor(1000, P = 0.95, side = 2, method = "EXACT", m = 5)
+
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

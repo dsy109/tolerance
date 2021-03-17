@@ -1,0 +1,139 @@
+<html><head><title>Plotting Capabilities for Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>plottol(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   plottol">
+<param name="keyword" value=" Plotting Capabilities for Tolerance Intervals">
+</object>
+
+
+<h2>Plotting Capabilities for Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides control charts and/or histograms for tolerance bounds on continuous data as well as tolerance ellipses
+for data distributed according to bivariate and trivariate normal distributions.  Scatterplots with regression tolerance bounds
+and interval plots for ANOVA tolerance intervals may also be produced.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plottol(tol.out, x, y = NULL, y.hat = NULL, 
+        side = c("two", "upper", "lower"), 
+        plot.type = c("control", "hist", "both"), 
+        x.lab = NULL, y.lab = NULL, z.lab = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>tol.out</code></td>
+<td>
+Output from any continuous (including ANOVA) tolerance interval procedure or from a regression tolerance bound procedure.</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+Either data from a continuous distribution or the predictors for a regression model.  If this is a design matrix
+for a linear regression model, then it must be in matrix form AND include a column of 1's if there is to be an intercept.  Note
+that multiple predictors are only allowed if considering polynomial regression.  If the output for <code>tol.out</code> concerns
+ANOVA tolerance intervals, then <code>x</code> must be a data frame.</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+The response vector for a regression setting.  Leave as <code>NULL</code> if not doing regression tolerance bounds.</td></tr>
+<tr valign="top"><td><code>y.hat</code></td>
+<td>
+The fitted values from a nonparametric smoothing routine if plotting nonparametric regression tolerance bounds.  Otherwise,
+leave as <code>NULL</code>.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+<code>side = "two"</code> produces plots for either the two-sided tolerance intervals or both one-sided tolerance intervals.
+This will be determined by the output in <code>tol.out</code>.  <code>side = "upper"</code> produces plots showing the upper tolerance
+bounds.  <code>side = "lower"</code> produces plots showing the lower tolerance bounds.</td></tr>
+<tr valign="top"><td><code>plot.type</code></td>
+<td>
+<code>plot.type = "control"</code> produces a control chart of the data along with the tolerance bounds specified
+by <code>side</code>.  <code>plot.type = "hist"</code> produces a histogram of the data along with the tolerance bounds specified by
+<code>side</code>.  <code>plot.type = "both"</code> produces both the control chart and histogram.  This argument is ignored
+when plotting regression data.</td></tr>
+<tr valign="top"><td><code>x.lab</code></td>
+<td>
+Specify the label for the x-axis.</td></tr>
+<tr valign="top"><td><code>y.lab</code></td>
+<td>
+Specify the label for the y-axis.</td></tr>
+<tr valign="top"><td><code>z.lab</code></td>
+<td>
+Specify the label for the z-axis.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Additional arguments passed to the plotting function used for the control charts or regression scatterplots.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>plottol</code> can return a control chart, histogram, or both for continuous data along with the calculated tolerance intervals.
+For regression data, <code>plottol</code> returns a scatterplot along with the regression tolerance bounds.  For ANOVA output, <code>plottol</code>
+returns an interval plot for each factor.</p>
+
+<h3>References</h3>
+
+<p>
+Montgomery, D. C. (2005), <EM>Introduction to Statistical Quality Control</EM>, Fifth Edition, John Wiley &amp; Sons, Inc.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 90%/90% 1-sided Weibull tolerance intervals for a sample
+## of size 150. 
+
+set.seed(100)
+x &lt;- rweibull(150, 3, 75)
+out &lt;- exttol.int(x = x, alpha = 0.15, P = 0.90, 
+                  dist = "Weibull")
+out
+
+plottol(out, x, plot.type = "both", side = "lower", 
+        x.lab = "Weibull Data")
+
+## 90%/90% trivariate normal tolerance region. 
+
+set.seed(100)
+x1 &lt;- rnorm(100, 0, 0.2)
+x2 &lt;- rnorm(100, 0, 0.5)
+x3 &lt;- rnorm(100, 5, 1)
+x &lt;- cbind(x1, x2, x3)
+mvtol.region(x = x, alpha = c(0.10, 0.05, 0.01), 
+             P = c(0.90, 0.95, 0.99), B = 1000) 
+
+out2 &lt;- mvtol.region(x = x, alpha = 0.10, P = 0.90, B = 1000) 
+out2
+plottol(out2, x)
+
+## 95%/95% 2-sided linear regression tolerance bounds
+## for a sample of size 100. 
+
+set.seed(100)
+x &lt;- runif(100, 0, 10)
+y &lt;- 20 + 5*x + rnorm(100, 0, 3)
+out3 &lt;- regtol.int(reg = lm(y ~ x), new.x = cbind(c(3, 6, 9)), 
+                   side = 2, alpha = 0.05, P = 0.95)
+plottol(out3, x = cbind(1, x), y = y, side = "two", x.lab = "X", 
+        y.lab = "Y")
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

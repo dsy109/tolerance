@@ -1,0 +1,99 @@
+<html><head><title>Estimating Various Quantities for Distribution-Free Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>distfree.est(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   distfree.est">
+<param name="keyword" value=" Estimating Various Quantities for Distribution-Free Tolerance Intervals">
+</object>
+
+
+<h2>Estimating Various Quantities for Distribution-Free Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+When providing two of the three quantities <code>n</code>, <code>alpha</code>, and <code>P</code>, this function solves for the 
+third quantity in the context of distribution-free tolerance intervals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+distfree.est(n = NULL, alpha = NULL, P = NULL, side = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+The necessary sample size to cover a proportion <code>P</code> of the population with
+confidence <code>1-alpha</code>.  Can be a vector.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+1 minus the confidence level attained when it is desired to cover a proportion <code>P</code>
+of the population and a sample size <code>n</code> is provided.  Can be a vector.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered with confidence <code>1-alpha</code> when a sample size <code>n</code>
+is provided.  Can be a vector.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is assumed (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+When providing two of the three quantities <code>n</code>, <code>alpha</code>, and <code>P</code>, <code>distfree.est</code> returns the
+third quantity.  If more than one value of a certain quantity is specified, then a table will be returned.</p>
+
+<h3>References</h3>
+
+<p>
+Natrella, M. G. (1963), <EM>Experimental Statistics: National Bureau of Standards - Handbook No. 91</EM>,
+United States Government Printing Office, Washington, D.C.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="nonpartolint.html">nptol.int</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## Solving for 1 minus the confidence level.
+
+distfree.est(n = 59, P = 0.95, side = 1)
+
+## Solving for the sample size.
+
+distfree.est(alpha = 0.05, P = 0.95, side = 1)
+
+## Solving for the proportion of the population to cover.
+
+distfree.est(n = 59, alpha = 0.05, side = 1)
+
+## Solving for sample sizes for many tolerance specifications.
+
+distfree.est(alpha = seq(0.01, 0.05, 0.01), 
+             P = seq(0.80, 0.99, 0.01), side = 2)
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,151 @@
+<html><head><title>Nonparametric Regression Tolerance Bounds</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>npregtol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   npregtol.int">
+<param name="keyword" value=" Nonparametric Regression Tolerance Bounds">
+</object>
+
+
+<h2>Nonparametric Regression Tolerance Bounds</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided nonparametric regression tolerance bounds.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+npregtol.int(x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
+             method = c("WILKS", "WALD", "HM"), upper = NULL, 
+             lower = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of values for the predictor variable.  Currently, this function is only capable of handling
+a single predictor.</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+A vector of values for the response variable.</td></tr>
+<tr valign="top"><td><code>y.hat</code></td>
+<td>
+A vector of fitted values extracted from a nonparametric smoothing routine.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance bound is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by the tolerance bound(s).</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+The method for determining which indices of the ordered residuals will be used for the tolerance bounds.  
+<code>"WILKS"</code>, <code>"WALD"</code>, and <code>"HM"</code> are each described in <code><a href="nonpartolint.html">nptol.int</a></code>.  However, since only one tolerance
+bound can actually be reported for this procedure, only the first tolerance bound will be returned.  Note that this is not
+an issue when <code>method = "WILKS"</code> is used as it only produces one set of tolerance bounds.</td></tr>
+<tr valign="top"><td><code>upper</code></td>
+<td>
+The upper bound of the data.  When <code>NULL</code>, then the maximum of <code>x</code> is used.</td></tr>
+<tr valign="top"><td><code>lower</code></td>
+<td>
+The lower bound of the data.  When <code>NULL</code>, then the minimum of <code>x</code> is used.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>npregtol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by the tolerance bound(s).</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+The values of the predictor variable.</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+The values of the response variable.</td></tr>
+<tr valign="top"><td><code>y.hat</code></td>
+<td>
+The predicted value of the response for the fitted nonparametric smoothing routine.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Young, D. S. (2010), <code>tolerance:</code> An <code>R</code> Package for Estimating Tolerance Intervals, <EM>Journal of Statistical Software</EM>, <B>36</B>(5), 1&ndash;39.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'loess.html')" style="text-decoration: underline; color: blue; cursor: hand">loess</a></code>, <code><a href="nonpartolint.html">nptol.int</a></code>, <code><a onclick="findlink('stats', 'splinefun.html')" style="text-decoration: underline; color: blue; cursor: hand">spline</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 95%/95% 2-sided nonparametric regression tolerance bounds
+## for a sample of size 50. 
+
+set.seed(100)
+x &lt;- runif(50, 5, 45)
+f1 &lt;- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) +
+               rnorm(50, sd = 0.01) 
+y &lt;- f1(x, 0.39, 0.11)
+y.hat &lt;- loess(y~x)$fit
+out &lt;- npregtol.int(x = x, y = y, y.hat = y.hat, side = 2, 
+                    alpha = 0.05, P = 0.95, method = "WILKS")
+out
+
+plottol(out, x = x, y = y, y.hat = y.hat, side = "two", 
+        x.lab = "X", y.lab = "Y")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

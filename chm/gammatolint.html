@@ -1,0 +1,145 @@
+<html><head><title>Gamma (or Log-Gamma) Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>gamtol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   gamtol.int">
+<param name="keyword" value=" Gamma (or Log-Gamma) Tolerance Intervals">
+</object>
+
+
+<h2>Gamma (or Log-Gamma) Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided tolerance intervals for data distributed according to either a gamma
+distribution or log-gamma distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+gamtol.int(x, alpha = 0.05, P = 0.99, side = 1,
+           method = c("HE", "WBE", "EXACT"), m = 50, 
+           log.gamma = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to either a gamma distribution or a log-gamma distribution.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+The method for calculating the k-factors when using the normal approximation.  The k-factor for the 1-sided tolerance intervals
+is performed exactly and thus the same for either method chosen.  <code>"HE"</code> is the
+Howe method and is often viewed as being extremely accurate, even for small sample sizes. <code>"WBE"</code> is the 
+Weissberg-Beatty method, which performs similarly to the Howe method for larger sample sizes. <code>"EXACT"</code> computes the k-factor exactly by finding the integral solution to the
+problem via the <code>integrate</code> function.  Note the computation time of this method is largely determined by <code>m</code>.  Note that the Ellison
+method is not given as an option here.</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+The maximum number of subintervals to be used in the <code>integrate</code> function.  This is necessary only for <code>method = "EXACT"</code>.  The larger
+the number, the more accurate the solution.  Too low of a value can result in an error.</td></tr>
+<tr valign="top"><td><code>log.gamma</code></td>
+<td>
+If <code>TRUE</code>, then the data is considered to be from a log-gamma distribution, in which
+case the output gives tolerance intervals for the log-gamma distribution.  The default is <code>FALSE</code>.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Recall that if the random variable <i>X</i> is distributed according to a log-gamma distribution, then the random variable <i>Y = ln(X)</i> is
+distributed according to a gamma distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>gamtol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Krishnamoorthy, K., Mathew, T., and Mukherjee, S. (2008), Normal-Based Methods for a Gamma Distribution:
+Prediction and Tolerance Intervals and Stress-Strength Reliability, <EM>Technometrics</EM>, <B>50</B>, 69&ndash;78.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'GammaDist.html')" style="text-decoration: underline; color: blue; cursor: hand">GammaDist</a></code>, <code><a href="Kfactor.html">K.factor</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 99%/99% 1-sided gamma tolerance intervals for a sample
+## of size 50. 
+
+set.seed(100)
+x &lt;- rgamma(50, 0.30, scale = 2)
+out &lt;- gamtol.int(x = x, alpha = 0.01, P = 0.99, side = 1,
+                  method = "HE")
+out
+
+plottol(out, x, plot.type = "both", side = "upper", 
+        x.lab = "Gamma Data")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

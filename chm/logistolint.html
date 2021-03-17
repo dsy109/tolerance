@@ -1,0 +1,134 @@
+<html><head><title>Logistic (or Log-Logistic) Tolerance Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>logistol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   logistol.int">
+<param name="keyword" value=" Logistic (or Log-Logistic) Tolerance Intervals">
+</object>
+
+
+<h2>Logistic (or Log-Logistic) Tolerance Intervals</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides 1-sided or 2-sided tolerance intervals for data distributed according to a logistic or log-logistic distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+logistol.int(x, alpha = 0.05, P = 0.99, log.log = FALSE,
+             side = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to a logistic or log-logistic distribution.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>log.log</code></td>
+<td>
+If <code>TRUE</code>, then the data is considered to be from a log-logistic distribution, in which
+case the output gives tolerance intervals for the log-logistic distribution.  The default is <code>FALSE</code>.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Recall that if the random variable <i>X</i> is distributed according to a log-logistic distribution, then the random variable <i>Y = ln(X)</i> is
+distributed according to a logistic distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>logistol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Balakrishnan, N. (1992), <EM>Handbook of the Logistic Distribution</EM>, Marcel Dekker, Inc.
+</p>
+<p>
+Hall, I. J. (1975), One-Sided Tolerance Limits for a Logistic Distribution Based on Censored Samples, <EM>Biometrics</EM>,
+<B>31</B>, 873&ndash;880.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'Logistic.html')" style="text-decoration: underline; color: blue; cursor: hand">Logistic</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 90%/95% 1-sided logistic tolerance intervals for a sample
+## of size 20. 
+
+set.seed(100)
+x &lt;- rlogis(20, 5, 1)
+out &lt;- logistol.int(x = x, alpha = 0.10, P = 0.95, 
+                    log.log = FALSE, side = 1) 
+out
+
+plottol(out, x, plot.type = "control", side = "two", 
+        x.lab = "Logistic Data")
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

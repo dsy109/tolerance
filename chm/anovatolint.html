@@ -1,0 +1,146 @@
+<html><head><title>Tolerance Intervals for ANOVA</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>anovatol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   anovatol.int">
+<param name="keyword" value=" Tolerance Intervals for ANOVA">
+</object>
+
+
+<h2>Tolerance Intervals for ANOVA</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Tolerance intervals for each factor level in a balanced (or nearly-balanced) ANOVA.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+anovatol.int(lm.out, data, alpha = 0.05, P = 0.99, side = 1,
+             method = c("HE", "WBE", "EXACT"), m = 50)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>lm.out</code></td>
+<td>
+An object of class <code>lm</code> (i.e., the results from the linear model fitting routine such that
+the <code>anova</code> function can act upon).</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+A data frame consisting of the data fitted in <code>lm.out</code>.  Note that <code>data</code> must have one
+column for each main effect (i.e., factor) that is analyzed in <code>lm.out</code> and that these columns must be of
+class <code>factor</code>.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+Whether a 1-sided or 2-sided tolerance interval is required (determined by <code>side = 1</code> or <code>side = 2</code>,
+respectively).</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+The method for calculating the k-factors.  The k-factor for the 1-sided tolerance intervals
+is performed exactly and thus the same for either method chosen.  <code>"HE"</code> is the
+Howe method and is often viewed as being extremely accurate, even for small sample sizes. <code>"WBE"</code> is the 
+Weissberg-Beatty method, which performs similarly to the Howe method for larger sample sizes. <code>"EXACT"</code> computes the k-factor exactly by finding the integral solution to the
+problem via the <code>integrate</code> function.  Note the computation time of this method is largely determined by <code>m</code>.   Note that the <code>"ELL"</code>
+option for the Ellison correction is disabled here.</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+The maximum number of subintervals to be used in the <code>integrate</code> function.  This is necessary only for <code>method = "EXACT"</code>.  The larger
+the number, the more accurate the solution.  Too low of a value can result in an error.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>anovatol.int</code> returns a list where each element is a data frame corresponding to each main effect (i.e.,
+factor) tested in the ANOVA and the rows of each data frame are the levels of that factor.  The columns of each data
+frame report the following:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>mean</code></td>
+<td>
+The mean for that factor level.</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+The effective sample size for that factor level.</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+The k-factor for constructing the respective factor level's tolerance interval.</td></tr>
+<tr valign="top"><td><code>1-sided.lower</code></td>
+<td>
+The 1-sided lower tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance bound.  This is given only if <code>side = 1</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.lower</code></td>
+<td>
+The 2-sided lower tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+<tr valign="top"><td><code>2-sided.upper</code></td>
+<td>
+The 2-sided upper tolerance bound.  This is given only if <code>side = 2</code>.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Howe, W. G. (1969), Two-Sided Tolerance Limits for Normal Populations - Some Improvements, <EM>Journal of the
+American Statistical Association</EM>, <B>64</B>, 610&ndash;620.
+</p>
+<p>
+Weissberg, A. and Beatty, G. (1969), Tables of Tolerance Limit Factors for Normal Distributions, <EM>Technometrics</EM>,
+<B>2</B>, 483&ndash;500.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="Kfactor.html">K.factor</a></code>, <code><a href="normtolint.html">normtol.int</a></code>, <code><a onclick="findlink('VGAM', 'notdocumentedyet.html')" style="text-decoration: underline; color: blue; cursor: hand">lm</a></code>, <code><a onclick="findlink('stats', 'anova.html')" style="text-decoration: underline; color: blue; cursor: hand">anova</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## 90%/95% 2-sided tolerance intervals for a 2-way ANOVA 
+## using the "warpbreaks" data.
+
+attach(warpbreaks)
+
+lm.out &lt;- lm(breaks ~ wool + tension)
+out &lt;- anovatol.int(lm.out, data = warpbreaks, alpha = 0.10,
+                    P = 0.95, side = 2, method = "HE")
+out
+
+plottol(out, x = warpbreaks)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

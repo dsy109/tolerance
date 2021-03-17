@@ -1,0 +1,125 @@
+<html><head><title>Uniformly Most Accurate Upper Tolerance Limits for Certain Discrete Distributions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>umatol.int(tolerance)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   umatol.int">
+<param name="keyword" value=" Uniformly Most Accurate Upper Tolerance Limits for Certain Discrete Distributions">
+</object>
+
+
+<h2>Uniformly Most Accurate Upper Tolerance Limits for Certain Discrete Distributions</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Provides uniformly most accurate upper tolerance limits for the binomial, negative binomial, and Poisson distributions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+umatol.int(x, n = NULL, dist = c("Bin", "NegBin", "Pois"), N, 
+           alpha = 0.05, P = 0.99)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+A vector of data which is distributed according to one of the binomial, negative binomial, or Poisson distributions.
+If the length of <code>x</code> is 1, then it is assumed that this number is the sum of iid values from the assumed distribution.</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+The sample size of the data.  If <code>null</code>, then <code>n</code> is calculated as the length of <code>x</code>.
+If the length of <code>x</code> is 1, then <code>n</code> must be a specified positive integer.</td></tr>
+<tr valign="top"><td><code>dist</code></td>
+<td>
+The distribution for the data given by <code>x</code>.  The options are <code>"Bin"</code> for the binomial distribution,
+<code>"NegBin"</code> for the negative binomial distribution, and <code>"Pois"</code> for the Poisson distribution.</td></tr>
+<tr valign="top"><td><code>N</code></td>
+<td>
+Must be specified for the binomial and negative binomial distributions.  If <code>dist = "Bin"</code>, then <code>N</code>
+is the number of Bernoulli trials and must be a positive integer.  If <code>dist = "NegBin"</code>, then <code>N</code> is the total number
+of successful trial (or dispersion parameter) and must be strictly positive.</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The level chosen such that <code>1-alpha</code> is the confidence level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population to be covered by this tolerance interval.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>umatol.int</code> returns a data frame with items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+The specified significance level.</td></tr>
+<tr valign="top"><td><code>P</code></td>
+<td>
+The proportion of the population covered by this tolerance interval.</td></tr>
+<tr valign="top"><td><code>p.hat</code></td>
+<td>
+The maximum likelihood estimate for the probability of success in each trial; reported if <code>dist = "Bin"</code>.</td></tr>
+<tr valign="top"><td><code>nu.hat</code></td>
+<td>
+The maximum likelihood estimate for the probability of success in each trial; reported if <code>dist = "NegBin"</code>.</td></tr>
+<tr valign="top"><td><code>lambda.hat</code></td>
+<td>
+The maximum likelihood estimate for the rate of success; reported if <code>dist = "Pois"</code>.</td></tr>
+<tr valign="top"><td><code>1-sided.upper</code></td>
+<td>
+The 1-sided upper tolerance limit.</td></tr>
+</table>
+
+<h3>References</h3>
+
+<p>
+Zacks, S. (1970), Uniformly Most Accurate Tolerance Limits for Monotone Likelihood Ratio Families of Discrete Distributions,
+<EM>Journal of the American Statistical Association</EM>, <B>65</B>, 307&ndash;316.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'Binomial.html')" style="text-decoration: underline; color: blue; cursor: hand">Binomial</a></code>, <code><a onclick="findlink('stats', 'NegBinomial.html')" style="text-decoration: underline; color: blue; cursor: hand">NegBinomial</a></code>, <code><a onclick="findlink('stats', 'Poisson.html')" style="text-decoration: underline; color: blue; cursor: hand">Poisson</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## Examples from Zacks (1970).
+
+umatol.int(25, n = 4, dist = "Bin", N = 10, alpha = 0.10, 
+           P = 0.95)
+umatol.int(13, n = 10, dist = "NegBin", N = 2, alpha = 0.10,
+           P = 0.95)
+umatol.int(37, n = 10, dist = "Pois", alpha = 0.10, P = 0.95)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>tolerance</em> version 0.2.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>
