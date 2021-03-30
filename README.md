@@ -58,6 +58,10 @@ Derek S. Young
 
 GPL (>= 2)
 
+### Funding Acknowledgment
+
+This package is based upon work supported by the Chan Zuckerberg Initiative, Grant Number [2020-225193](https://chanzuckerberg.com/eoss/proposals/enhancing-usability-of-mixtools-and-tolerance-for-the-biomedical-community/).
+
 ### Code of Conduct
 
 As contributors and maintainers of this project, we pledge to respect all people who 
