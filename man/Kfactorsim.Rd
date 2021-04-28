@@ -27,7 +27,7 @@ K.factor.sim(n, l = NULL, alpha = 0.05, P = 0.99, side = 1,
 }
 
 \note{
-For larger combinations of \code{n} and \code{l} when \code{side = 2} and \code{method = "EXACT"}, the calculation can be slow. For larger sample sizes when \code{side = "BONF"}, there may be some accuracy issues with the 1-sided calculation since it depends on the noncentral t-distribution.  
+For larger combinations of \code{n} and \code{l} when \code{side = 2} and \code{method = "EXACT"}, the calculation can be slow. For larger sample sizes when \code{method = "BONF"}, there may be some accuracy issues with the 1-sided calculation since it depends on the noncentral t-distribution.  
 The code is primarily intended to be used for moderate values of the noncentrality parameter. It will not be highly accurate, especially in the tails, for large values.
 See \code{\link{TDist}} for further details.
 
