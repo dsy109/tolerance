@@ -51,8 +51,6 @@ these columns must be of class factor.}
  \code{ggplottol.anova} can return box plots as well as corresponding tolerance intervals for each main effect of an ANOVA.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
  \code\link{anovatol.int}, \code\link{plottol}
 }
