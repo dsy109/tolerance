@@ -5,7 +5,6 @@ library(plotly)
 ggplottol.hist <- function (tol.out, 
                             x,  
                             side = c("two","upper", "lower"), 
-                            freq = TRUE,
                             x.lab = NULL,
                             x.lab.size = NULL,
                             x.tick.size = NULL,
