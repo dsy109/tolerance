@@ -1,5 +1,6 @@
 library(tolerance)
 library(plotly)
+library(rgl)
 
 ggplottol.multi <- function (tol.out,
                              x,
