@@ -318,19 +318,3 @@ ggplottol.anova <- function (tol.out,
     }
   }
 }
-
-## 90%/95% 1-sided tolerance intervals for a 2-way ANOVA
-## using the "warpbreaks" data.
-attach(warpbreaks)
-lm.out <- lm(breaks ~ wool + tension)
-out.1 <- anovatol.int(lm.out, data = warpbreaks, alpha = 0.10,
-                      P = 0.95, side = 1, method = "HE")
-out.1
-ggplottol.anova(out.1, x = warpbreaks , factors = 'wool' , x.lab = "Wool" , side="two")
-
-## 90%/95% 2-sided tolerance intervals for a 2-way ANOVA
-## using the "warpbreaks" data.
-out.2 <- anovatol.int(lm.out, data = warpbreaks, alpha = 0.10,
-                      P = 0.95, side = 2, method = "HE")
-out.2
-ggplottol.anova(out.2, x = warpbreaks , range.min = 20 , range.max = 60)
