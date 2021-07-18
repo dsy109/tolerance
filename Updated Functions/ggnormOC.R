@@ -1,5 +1,5 @@
-library(scales)
 library(tolerance)
+library(plotly)
 
 ggnorm.OC <- function(k = NULL, 
                       alpha = NULL, 
