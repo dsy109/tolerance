@@ -115,18 +115,6 @@ ggplottol.control <- function (tol.out ,
                        line = list(dash = "dash" , color=tol.col , width = tol.lwd) , 
                        name='Lower <br>Limit' ,
                        showlegend = FALSE)
-        # ggplotly(
-        #   ggplot()+
-        #     geom_point(aes(x=(1:length(x)) , y=x)) +
-        #     geom_line(aes(x=(1:length(x)) , y=x)) +
-        #     ggtitle(label = paste(alpha * 100, "% / ", P * 100,
-        #                           "% Lower Tolerance Limit", sep = "")) +
-        #     theme(plot.title = element_text(hjust = 0.5)) +
-        #     xlab("Index") + ylab(x.lab) +
-        #     geom_hline(aes(yintercept = out[, (n.c - 1)]),
-        #                linetype = "dashed",
-        #                color = (2:(n.r + 1)))
-        # )
       } else if (side == "upper") {
         plot_ly() %>%
           add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
@@ -153,18 +141,6 @@ ggplottol.control <- function (tol.out ,
                        line = list(dash = "dash" , color=tol.col , width = tol.lwd) , 
                        name='Upper <br>Limit' ,
                        showlegend = FALSE)
-        # ggplotly(
-        #   ggplot()+
-        #     geom_point(aes(x=(1:length(x)) , y=x)) +
-        #     geom_line(aes(x=(1:length(x)) , y=x)) +
-        #     ggtitle(label = paste(alpha * 100, "% / ", P * 100,
-        #                           "% Lower Tolerance Limit", sep = "")) +
-        #     theme(plot.title = element_text(hjust = 0.5)) +
-        #     xlab("Index") + ylab(x.lab) +
-        #     geom_hline(aes(yintercept = out[, (n.c - 1)]),
-        #                linetype = "dashed",
-        #                color = (2:(n.r + 1)))
-        # )
       } else if (side == "two"){
         print("NOTE: The plot reflects two 1-sided tolerance intervals and NOT a 2-sided tolerance interval!")
         plot_ly() %>%
@@ -197,21 +173,6 @@ ggplottol.control <- function (tol.out ,
                        line = list(dash = "dash" , color=tol.col , width = tol.lwd) , 
                        name='Upper <br>Limit' ,
                        showlegend = FALSE)
-        # ggplotly(
-        #   ggplot()+
-        #     geom_point(aes(x=(1:length(x)) , y=x)) +
-        #     geom_line(aes(x=(1:length(x)) , y=x)) +
-        #     ggtitle(label = paste(alpha * 100, "% / ", P * 100,
-        #                           "% Tolerance Limits", sep = "")) +
-        #     theme(plot.title = element_text(hjust = 0.5)) +
-        #     xlab("Index") + ylab(x.lab) +
-        #     geom_hline(aes(yintercept = out[, (n.c - 1)]),
-        #                linetype = "dashed",
-        #                color = (2:(n.r + 1))) +
-        #     geom_hline(aes(yintercept = out[, (n.c)]),
-        #                linetype = "dashed",
-        #                color = (2:(n.r + 1)))
-        # )
       }
     }
     else {
@@ -245,21 +206,6 @@ ggplottol.control <- function (tol.out ,
                      line = list(dash = "dash" , color=tol.col , width = tol.lwd) , 
                      name='Upper <br>Limit' ,
                      showlegend = FALSE)
-      # ggplotly(
-      #   ggplot()+
-      #     geom_point(aes(x=(1:length(x)) , y=x)) +
-      #     geom_line(aes(x=(1:length(x)) , y=x)) +
-      #     ggtitle(label = paste(alpha * 100, "% / ", P * 100,
-      #                           "% Tolerance Limits", sep = "")) +
-      #     theme(plot.title = element_text(hjust = 0.5)) +
-      #     xlab("Index") + ylab(x.lab) +
-      #     geom_hline(aes(yintercept = out[, (n.c - 1)]),
-      #                linetype = "dashed",
-      #                color = (2:(n.r + 1))) +
-      #     geom_hline(aes(yintercept = out[, (n.c)]),
-      #                linetype = "dashed",
-      #                color = (2:(n.r + 1)))
-      # )
     }
   }
 }
