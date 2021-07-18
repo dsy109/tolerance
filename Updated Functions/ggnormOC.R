@@ -117,14 +117,6 @@ ggnorm.OC <- function(k = NULL,
         )
     }
     print(plot)
-    # ggplot(data = data.P , aes(x=n , y=P , group = 1-alpha)) +
-    #   scale_x_continuous(limits = c(min(n) , max(n)) , breaks = pretty_breaks()) +
-    #   scale_y_continuous(limits = c(min(all.P) , 1) , breaks = pretty_breaks()) +
-    #   xlab("n") + ylab("P") +
-    #   geom_line(aes(colour = factor(1-alpha))) +
-    #   geom_point(aes(colour = factor(1-alpha))) +
-    #   ggtitle(paste("Normal Tolerance Interval OC Curve for P (k=",k,")")) +
-    #   labs(col=(expression(paste("(1-",alpha,")"))))
   } 
   ### If alpha is NULL ###
   else if(is.null(alpha)){
@@ -181,14 +173,6 @@ ggnorm.OC <- function(k = NULL,
         )
     }
     print(plot)
-    # ggplot(data = data.alpha , aes(x=n , y=alpha , group = P)) +
-    #   scale_x_continuous(limits = c(min(n) , max(n)) , breaks = pretty_breaks()) +
-    #   scale_y_continuous(limits = c(min(all.alpha) , 1) , breaks = pretty_breaks()) +
-    #   xlab("n") + ylab(expression(paste("(1-",alpha,")"))) +
-    #   geom_line(aes(colour = factor(P))) +
-    #   geom_point(aes(colour = factor(P))) +
-    #   ggtitle(bquote("Normal Tolerance Interval OC Curve for 1-" ~ alpha ~ .(tmp.obj))) +
-    #   labs(col=(expression(paste(P))))
   }
   ### If k is NULL ###
   else if(is.null(k)){
@@ -275,15 +259,6 @@ ggnorm.OC <- function(k = NULL,
         )
     }
     print(plot)
-    # ggplot(data = data.k , aes(x=n , y=k , group=group)) +
-    #   scale_x_continuous(limits = c(min(n) , max(n)) , breaks = pretty_breaks()) +
-    #   scale_y_continuous(limits = c(0 , max(all.k)) , breaks = pretty_breaks()) +
-    #   xlab("n") + ylab("k") +
-    #   geom_line(aes(colour = as.factor(group))) +
-    #   geom_point(aes(colour = as.factor(group))) +
-    #   ggtitle(paste("Normal Tolerance Interval OC Curve for k and n")) +
-    #   scale_color_discrete(name = expression(paste("(1-",alpha," , P)")),
-    #                        labels=unique(legend.names))
   } 
   ### Otherwise ###
   else{
