@@ -1,4 +1,4 @@
-nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side = 1, 
+nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side = 1, 
                            alpha = 0.05, P = 0.99, maxiter = 50, new=TRUE, ...) 
 {
   n <- nrow(xy.data)
@@ -11,7 +11,12 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side =
     stop(paste("Error in nls routine.  Consider different starting estimates \n\tof the parameters.  Type help(nls) for more options."), 
          call. = FALSE)
   }
+  
   sigma <- summary(out)$sigma
+  if (sigma == Inf | sigma == (-Inf)){
+    warning("Residual sum of square of Nonlinear regression is NOT finite.")
+  }
+  
   beta.hat <- coef(out)
   beta.names <- names(beta.hat)
   temp <- data.frame(matrix(beta.hat, ncol = length(beta.hat)))
@@ -31,20 +36,27 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side =
       PTP0 <- PTP3
     }
     PTP <- PTP.new
-  }
-  else PTP <- PTP2
-  if (is.null(x.new) == FALSE) {
-    x.temp <- cbind(NA, x.new)
+  } else {PTP <- PTP2}
+  
+  if (is.null(new.x) == FALSE) {
+    new.x <- as.data.frame(new.x)
+    if (dim(new.x)[2] != (dim(xy.data)[2]-1)){
+      stop("Dimension of new data needs to be the same as the original dataset")
+    }
+    
+    x.temp <- cbind(NA, new.x)
     colnames(x.temp) <- colnames(xy.data)
     xy.data <- rbind(xy.data, x.temp)
     P.mat <- with(temp, attr(eval(fx, xy.data), "gradient"))
   }
+  
   y.hat <- predict(out, newdata = xy.data)
   n.star <- rep(NULL, nrow(xy.data))
   for (i in 1:nrow(xy.data)) {
     n.star[i] <- c(as.numeric((t(P.mat[i, ]) %*% PTP %*% 
                                  t(t(P.mat[i, ])))))
   }
+  
   n.star <- n.star^(-1)
   df = n - pars
   if (side == 1) {
@@ -57,8 +69,8 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side =
     K[is.na(K)] <- Inf
     upper <- y.hat + sigma * K
     lower <- y.hat - sigma * K
-    temp <- data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
-                             lower, upper))
+    temp <- as.data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
+                                lower, upper))
     colnames(temp) <- c("alpha", "P", "y.hat", "y", "1-sided.lower", 
                         "1-sided.upper")
   }
@@ -66,14 +78,14 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side =
     K <- sqrt(df * qchisq(P, 1, 1/n.star)/qchisq(alpha, df))
     upper <- y.hat + sigma * K
     lower <- y.hat - sigma * K
-    temp <- data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
-                             lower, upper))
+    temp <- as.data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
+                                lower, upper))
     colnames(temp) <- c("alpha", "P", "y.hat", "y", "2-sided.lower", 
                         "2-sided.upper")
   }
   if (new){
     temp2 <- list()
-    temp2$fit <- temp[,c(4,3,5,6)]
+    temp2$tol <- temp[,c(4,3,5,6)]
     temp2$alpha.P <- c(alpha,P)
     temp2$reg.type <- "nonlinear regression"
     temp2$model <- formula
