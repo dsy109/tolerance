@@ -7,22 +7,40 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
   if (class(reg) != "lm") {
     stop(paste("Input must be of class 'lm'.", "\n"))
   }
-  n <- length(reg$res)
-  pars <- length(reg$coef)
+  
+  n <- length(reg$residuals)
+  pars <- length(reg$coefficients)
   new.length <- 0
   est <- predict(reg, se.fit = TRUE)
-  est.1 <- NULL
+  est.new <- NULL
+  
   if (is.null(new.x) == FALSE) {
-    new.length <- nrow(new.x)
-    est.1 <- predict(reg, newdata = new.x, se.fit = TRUE)
+    new.x <- as.data.frame(new.x)
+    if (names(reg$coefficients)[1] == "(Intercept)") {
+      if (dim(new.x)[2] != (pars-1)){
+        stop("Dimension of new data needs to be the same as the original dataset")
+      }
+      new.length <- dim(new.x)[1]
+      names(new.x) <- names(reg$coefficients)[-1]
+      est.new <- predict(reg , newdata = new.x , se.fit = TRUE)
+    } else if (names(reg$coefficients)[1] != "(Intercept)"){
+      if (dim(new.x)[2] != (pars)){
+        stop("Dimension of new data needs to be the same as the original dataset")
+      }
+      new.length <- dim(new.x)[1]
+      names(new.x) <- names(reg$coefficients)
+      est.new <- predict(reg , newdata = new.x , se.fit = TRUE)
+    }
   }
+  
   y <- c(reg$model[, 1], rep(NA, new.length))
-  y.hat <- c(est$fit, est.1$fit)
-  se.y <- c(est$se.fit, est.1$se.fit)
+  y.hat <- as.vector(c(est$fit, est.new$fit))
+  se.y <- as.vector(c(est$se.fit, est.new$se.fit))
   a.out <- anova(reg)
   MSE <- a.out$"Mean Sq"[length(a.out$"Mean Sq")]
   df <- a.out$Df[length(a.out$Df)]
   n.star <- MSE/se.y^2
+  
   if (side == 1) {
     z.p <- qnorm(P)
     delta <- sqrt(n.star) * z.p
@@ -31,21 +49,22 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
     K <- t.delta/sqrt(n.star)
     upper <- y.hat + sqrt(MSE) * K
     lower <- y.hat - sqrt(MSE) * K
-    temp <- data.frame(cbind(alpha, P, y, y.hat, lower, upper))
-    colnames(temp) <- c("alpha", "P", "y", "y.hat", "1-sided.lower", 
+    temp <- as.data.frame(cbind(alpha , P , y, y.hat, lower, upper))
+    colnames(temp) <- c("alpha","P","y", "y.hat", "1-sided.lower", 
                         "1-sided.upper")
   }
   else {
     K <- sqrt(df * qchisq(P, 1, 1/n.star)/qchisq(alpha, df))
     upper <- y.hat + sqrt(MSE) * K
     lower <- y.hat - sqrt(MSE) * K
-    temp <- data.frame(cbind(alpha, P, y, y.hat, lower, upper))
-    colnames(temp) <- c("alpha", "P", "y", "y.hat", "2-sided.lower", 
+    temp <- as.data.frame(cbind(alpha , P , y, y.hat, lower, upper))
+    colnames(temp) <- c("alpha","P","y", "y.hat", "2-sided.lower", 
                         "2-sided.upper")
   }
+  
   if(new){
     temp2 <- list()
-    temp2$fit <- temp[,3:6]
+    temp2$tol <- temp[,3:6]
     temp2$alpha.P <- c(alpha,P)
     temp2$reg.type  <- "linear regression"
     temp2$model <- reg
