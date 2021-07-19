@@ -1,13 +1,17 @@
-npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99, method = c("WILKS", 
-                                                                                     "WALD", "HM"), upper = NULL, lower = NULL,
+npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
+                           method = c("WILKS", "WALD", "HM"), upper = NULL, lower = NULL,
                            new = TRUE) 
 {
   method <- match.arg(method)
-  n <- length(x)
-  if (length(x) != n | length(y) != n | length(y.hat) != n) {
+  
+  xy.data <- cbind(x,y)
+  n <- dim(xy.data)[1]
+  
+  if (length(y.hat) != n) {
     stop(paste("The predictor vector, response vector, and fitted value vector must all be of the same length!", 
                "\n"))
   }
+  
   res <- y - y.hat
   tol.temp <- nptol.int(res, side = side, alpha = alpha, P = P, 
                         method = method, upper = upper, lower = lower)
@@ -39,6 +43,5 @@ npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99, method
   if (length(out.temp) == 1) {
     out.temp <- out.temp[[1]]
   }
-  # out.temp <- data.frame(out.temp, check.names = FALSE)
   out.temp
 }
