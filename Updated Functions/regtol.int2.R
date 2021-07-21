@@ -59,7 +59,7 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
     temp2 <- list()
     temp2$tol <- temp[,3:6]
     temp2$alpha.P <- c(alpha,P)
-    temp2$reg.type  <- "linear regression"
+    temp2$reg.type  <- "linear_regression"
     temp2$model <- reg
     temp2
   } else{
