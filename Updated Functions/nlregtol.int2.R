@@ -87,7 +87,7 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side =
     temp2 <- list()
     temp2$tol <- temp[,c(4,3,5,6)]
     temp2$alpha.P <- c(alpha,P)
-    temp2$reg.type <- "nonlinear_regression"
+    temp2$reg.type <- "nlreg"
     temp2$model <- formula
     temp2$newdata <- as.data.frame(new.x)
     temp2
