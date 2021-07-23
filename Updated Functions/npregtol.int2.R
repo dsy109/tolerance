@@ -33,7 +33,7 @@ npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
       out.temp[[i]] <- list()
       out.temp[[i]]$fit <- temp[,4:7]
       out.temp[[i]]$alpha.P <- c(alpha,P)
-      out.temp[[i]]$reg.type  <- "nonparametric_regression"
+      out.temp[[i]]$reg.type  <- "npreg"
     } else{
       index <- which(names(temp) == "y.hat")
       temp <- data.matrix(temp[order(temp[, index]), ], rownames.force = FALSE)
