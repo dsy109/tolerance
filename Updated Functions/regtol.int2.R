@@ -1,4 +1,4 @@
-regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, new = TRUE) 
+regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, new = FALSE) 
 {
   if (side != 1 && side != 2) {
     stop(paste("Must specify a one-sided or two-sided procedure!", 
