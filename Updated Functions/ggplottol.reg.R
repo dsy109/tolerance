@@ -113,8 +113,8 @@ ggplottol.reg <- function (tol.out,
   alpha <- (tol.out$alpha.P)[1]
   P <- (tol.out$alpha.P)[2]
   ################################
-  if (tol.out$reg.type == "nonparametric regression" | 
-      tol.out$reg.type == "nonlinear regression"){
+  if (tol.out$reg.type == "npreg" | 
+      tol.out$reg.type == "nlreg"){
     ### Univariate X ###
     if (dim(xy.data.original)[2] == 2) {
       if (names(tol.out$fit)[3] == "1-sided.lower"){
@@ -425,7 +425,7 @@ ggplottol.reg <- function (tol.out,
       }
       print(plot)
     }
-  } else if (tol.out$reg.type == "linear regression"){
+  } else if (tol.out$reg.type == "linreg"){
     ### Univariate X ###
     if (dim(xy.data.original)[2] == 2) {
       if (names(tol.out$model$coefficients)[1] != "(Intercept)") {
