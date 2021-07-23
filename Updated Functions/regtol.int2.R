@@ -16,14 +16,12 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
   
   if (is.null(new.x) == FALSE) {
     new.x <- as.data.frame(new.x)
-    pred.names <- colnames(get_all_vars(reg))[-1]
+    pred.names <- all.vars(formula(reg))[-1]
     if(!all(pred.names%in%colnames(new.x))){
       colnames(new.x)[1:length(pred.names)] <- pred.names
     }
     new.length <- dim(new.x)[1]
     est.new <- predict(reg , newdata = new.x , se.fit = TRUE)
-  } else{
-    
   }
   
   y <- c(reg$model[, 1], rep(NA, new.length))
