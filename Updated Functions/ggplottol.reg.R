@@ -89,14 +89,14 @@ ggplottol.reg <- function (tol.out,
   
   if (dim(xy.data.original)[2] == 2){
     if (is.null(x.new)){
-      tol.fit.order <- cbind(x,tol.out$fit[match(y,tol.out$fit$y),])[order(x),]
+      tol.fit.order <- cbind(x,tol.out$tol[match(y,tol.out$tol$y),])[order(x),]
     } else if (!is.null(x.new)) {
-      if (length(c(x , x.new)) > dim(tol.out$fit)[1]) {
+      if (length(c(x , x.new)) > dim(tol.out$tol)[1]) {
         stop("No tolerance limits generated for new data. Therefore, No plot generated.\nPlease check your output.")
       } else if ((min(x.new) < min(x)) | (max(x.new) > max(x))){
         print("Note: new data exceed the domain of original data.")
       }
-      tol.fit.order <- cbind(c(x , x.new),tol.out$fit)[order(c(x , x.new)),]
+      tol.fit.order <- cbind(c(x , x.new),tol.out$tol)[order(c(x , x.new)),]
     }
   }
   
@@ -117,7 +117,7 @@ ggplottol.reg <- function (tol.out,
       tol.out$reg.type == "nlreg"){
     ### Univariate X ###
     if (dim(xy.data.original)[2] == 2) {
-      if (names(tol.out$fit)[3] == "1-sided.lower"){
+      if (names(tol.out$tol)[3] == "1-sided.lower"){
         if (side == "upper"){
           plot <- plot_ly() %>%
             add_trace(x=xy.data.original[,1] , 
@@ -245,7 +245,7 @@ ggplottol.reg <- function (tol.out,
     } else if (dim(xy.data.original)[2] == 3) {
       ### Bivariate X ###
       plot <- plot_ly()
-      if (names(tol.out$fit)[3] == "1-sided.lower") {
+      if (names(tol.out$tol)[3] == "1-sided.lower") {
         if (side == "upper"){
           plot <- plot %>%
             add_markers(plot,
@@ -257,14 +257,14 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,4], 
+                      z=(tol.out$tol)[1:row.use,4], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -297,14 +297,14 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,3], 
+                      z=(tol.out$tol)[1:row.use,3], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -338,21 +338,21 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,3], 
+                      z=(tol.out$tol)[1:row.use,3], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
                       name = 'Lower Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,4], 
+                      z=(tol.out$tol)[1:row.use,4], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -386,21 +386,21 @@ ggplottol.reg <- function (tol.out,
                       name = 'Data' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,2], 
+                    z=(tol.out$tol)[1:row.use,2], 
                     type = 'mesh3d' ,
                     facecolor = rep(fit.col , row.use^2), 
                     opacity = fit.opacity,
                     name = 'Fitted Plane' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,3], 
+                    z=(tol.out$tol)[1:row.use,3], 
                     type = 'mesh3d' ,
                     facecolor = rep(tol.col , row.use^2), 
                     opacity = tol.opacity,
                     name = 'Lower Plane' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,4], 
+                    z=(tol.out$tol)[1:row.use,4], 
                     type = 'mesh3d' ,
                     facecolor = rep(tol.col , row.use^2), 
                     opacity = tol.opacity,
@@ -431,7 +431,7 @@ ggplottol.reg <- function (tol.out,
       if (names(tol.out$model$coefficients)[1] != "(Intercept)") {
         print("NOTE: A regression through the origin is fitted!")
       }
-      if (names(tol.out$fit)[3] == "1-sided.lower"){
+      if (names(tol.out$tol)[3] == "1-sided.lower"){
         if (side == "upper"){
           plot <- plot_ly() %>%
             add_trace(x=xy.data.original[,1] , 
@@ -562,7 +562,7 @@ ggplottol.reg <- function (tol.out,
       }
       ### Bivariate X ###
       plot <- plot_ly()
-      if (names(tol.out$fit)[3] == "1-sided.lower") {
+      if (names(tol.out$tol)[3] == "1-sided.lower") {
         if (side == "upper"){
           plot <- plot %>%
             add_markers(plot,
@@ -574,14 +574,14 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,4], 
+                      z=(tol.out$tol)[1:row.use,4], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -614,14 +614,14 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,3], 
+                      z=(tol.out$tol)[1:row.use,3], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -655,21 +655,21 @@ ggplottol.reg <- function (tol.out,
                         name = 'Data' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,2], 
+                      z=(tol.out$tol)[1:row.use,2], 
                       type = 'mesh3d' ,
                       facecolor = rep(fit.col , row.use^2), 
                       opacity = fit.opacity,
                       name = 'Fitted Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,3], 
+                      z=(tol.out$tol)[1:row.use,3], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
                       name = 'Lower Plane' , showlegend = FALSE) %>%
             add_trace(x=xy.data.original[,1] , 
                       y=xy.data.original[,2] , 
-                      z=(tol.out$fit)[1:row.use,4], 
+                      z=(tol.out$tol)[1:row.use,4], 
                       type = 'mesh3d' ,
                       facecolor = rep(tol.col , row.use^2), 
                       opacity = tol.opacity,
@@ -703,21 +703,21 @@ ggplottol.reg <- function (tol.out,
                       name = 'Data' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,2], 
+                    z=(tol.out$tol)[1:row.use,2], 
                     type = 'mesh3d' ,
                     facecolor = rep(fit.col , row.use^2), 
                     opacity = fit.opacity,
                     name = 'Fitted Plane' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,3], 
+                    z=(tol.out$tol)[1:row.use,3], 
                     type = 'mesh3d' ,
                     facecolor = rep(tol.col , row.use^2), 
                     opacity = tol.opacity,
                     name = 'Lower Plane' , showlegend = FALSE) %>%
           add_trace(x=xy.data.original[,1] , 
                     y=xy.data.original[,2] , 
-                    z=(tol.out$fit)[1:row.use,4], 
+                    z=(tol.out$tol)[1:row.use,4], 
                     type = 'mesh3d' ,
                     facecolor = rep(tol.col , row.use^2), 
                     opacity = tol.opacity,
