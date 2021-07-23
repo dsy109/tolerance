@@ -1,6 +1,3 @@
-library(tolerance)
-library(plotly)
-
 ggplottol.reg <- function (tol.out,
                            x,
                            x.new = NULL,
