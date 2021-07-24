@@ -56,7 +56,7 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
   if(new){
     temp2 <- list()
     temp2$tol <- temp[,3:6]
-    temp2$alpha.P <- c(alpha,P)
+    temp2$alpha.P.side <- c(alpha,P,side)
     temp2$reg.type  <- "linreg"
     temp2$model <- reg
     temp2$newdata <- as.data.frame(new.x)
