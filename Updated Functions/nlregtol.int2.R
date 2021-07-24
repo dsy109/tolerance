@@ -1,5 +1,5 @@
 nlregtol.int2 <- function (formula, yx.data = data.frame(), new.x = NULL, side = 1, 
-                           alpha = 0.05, P = 0.99, maxiter = 50, new=TRUE, ...) 
+                           alpha = 0.05, P = 0.99, maxiter = 50, new=FALSE, ...) 
 {
   yx.data.original <- yx.data
   n <- nrow(yx.data)
