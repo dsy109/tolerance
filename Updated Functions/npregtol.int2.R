@@ -1,10 +1,13 @@
 npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
-                           method = c("WILKS", "WALD", "HM"), upper = NULL, lower = NULL,
+                           method = c("WILKS", "WALD", "HM"), 
+                           upper = NULL, lower = NULL,
                            new = TRUE) 
 {
   method <- match.arg(method)
+  upper.set <- upper
+  lower.set <- lower
   
-  xy.data <- cbind(x,y)
+  xy.data <- cbind(y,x)
   n <- dim(xy.data)[1]
   
   if (length(y.hat) != n) {
@@ -14,34 +17,42 @@ npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
   
   res <- y - y.hat
   tol.temp <- nptol.int(res, side = side, alpha = alpha, P = P, 
-                        method = method, upper = upper, lower = lower)
-  out.temp <- list()
-  for (i in 1:nrow(tol.temp)) {
-    upper <- y.hat + tol.temp[i, 4]
-    lower <- y.hat + tol.temp[i, 3]
-    temp <- data.frame(cbind(alpha, P, x, y, y.hat, lower, 
-                             upper))
-    if (side == 2) {
-      colnames(temp) <- c("alpha", "P", "x", "y", "y.hat", 
-                          "2-sided.lower", "2-sided.upper")
-    }
-    else {
-      colnames(temp) <- c("alpha", "P", "x", "y", "y.hat", 
-                          "1-sided.lower", "1-sided.upper")
-    }
-    if (new){
-      out.temp[[i]] <- list()
-      out.temp[[i]]$fit <- temp[,4:7]
-      out.temp[[i]]$alpha.P <- c(alpha,P)
-      out.temp[[i]]$reg.type  <- "npreg"
-    } else{
-      index <- which(names(temp) == "y.hat")
-      temp <- data.matrix(temp[order(temp[, index]), ], rownames.force = FALSE)
-      out.temp[[i]] <- temp
-    }
+                        method = method, upper = NULL, lower = NULL)
+  
+  tol.upper <- y.hat + as.numeric(tol.temp[4])
+  tol.lower <- y.hat + as.numeric(tol.temp[3])
+  
+  if (!is.null(upper.set)){
+    tol.upper[which(tol.upper >= upper.set)] <- upper.set
   }
-  if (length(out.temp) == 1) {
-    out.temp <- out.temp[[1]]
+  if (!is.null(lower.set)){
+    tol.lower[which(tol.lower <= lower.set)] <- lower.set
   }
-  out.temp
+  
+  temp <- as.data.frame(cbind(alpha, P, y, y.hat, 
+                              tol.lower, 
+                              tol.upper))
+  if (side == 2) {
+    colnames(temp) <- c("alpha", "P", "y", "y.hat", 
+                        "2-sided.lower", "2-sided.upper")
+  } else if (side == 1) {
+    colnames(temp) <- c("alpha", "P", "y", "y.hat", 
+                        "1-sided.lower", "1-sided.upper")
+  }  
+  
+  if (new){
+    out.temp <- list()
+    out.temp$tol <- temp[,3:6]
+    out.temp$alpha.P.side <- c(alpha,P,side)
+    out.temp$reg.type  <- "npreg"
+    out.temp$method <- method
+    if (is.null(lower.set)){lower.set <- "NULL"}
+    if (is.null(upper.set)){upper.set <- "NULL"}
+    out.temp$lower.upper <- c(lower.set , upper.set)
+    out.temp
+  } else{
+    index <- which(names(temp) == "y.hat")
+    temp <- data.matrix(temp[order(temp[, index]), ], rownames.force = FALSE)
+    temp
+  }  
 }
