@@ -1,9 +1,10 @@
-nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side = 1, 
+nlregtol.int2 <- function (formula, yx.data = data.frame(), new.x = NULL, side = 1, 
                            alpha = 0.05, P = 0.99, maxiter = 50, new=TRUE, ...) 
 {
-  n <- nrow(xy.data)
+  yx.data.original <- yx.data
+  n <- nrow(yx.data)
   form <- as.formula(formula)
-  out <- try(suppressWarnings(nls(formula = form, data = xy.data, 
+  out <- try(suppressWarnings(nls(formula = form, data = yx.data, 
                                   control = list(maxiter = maxiter, warnOnly = TRUE), ...)), 
              silent = TRUE)
   test.sig <- class(try(summary(out)$sigma, silent = TRUE))
@@ -40,19 +41,19 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side =
   
   if (is.null(new.x) == FALSE) {
     new.x <- as.data.frame(new.x)
-    if (dim(new.x)[2] != (dim(xy.data)[2]-1)){
+    if (dim(new.x)[2] != (dim(yx.data)[2]-1)){
       stop("Dimension of new data needs to be the same as the original dataset")
     }
     
     x.temp <- cbind(NA, new.x)
-    colnames(x.temp) <- colnames(xy.data)
-    xy.data <- rbind(xy.data, x.temp)
-    P.mat <- with(temp, attr(eval(fx, xy.data), "gradient"))
+    colnames(x.temp) <- colnames(yx.data)
+    yx.data <- rbind(yx.data, x.temp)
+    P.mat <- with(temp, attr(eval(fx, yx.data), "gradient"))
   }
   
-  y.hat <- predict(out, newdata = xy.data)
-  n.star <- rep(NULL, nrow(xy.data))
-  for (i in 1:nrow(xy.data)) {
+  y.hat <- predict(out, newdata = yx.data)
+  n.star <- rep(NULL, nrow(yx.data))
+  for (i in 1:nrow(yx.data)) {
     n.star[i] <- c(as.numeric((t(P.mat[i, ]) %*% PTP %*% 
                                  t(t(P.mat[i, ])))))
   }
@@ -69,7 +70,7 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side =
     K[is.na(K)] <- Inf
     upper <- y.hat + sigma * K
     lower <- y.hat - sigma * K
-    temp <- as.data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
+    temp <- as.data.frame(cbind(alpha, P, y.hat, yx.data[, 1], 
                                 lower, upper))
     colnames(temp) <- c("alpha", "P", "y.hat", "y", "1-sided.lower", 
                         "1-sided.upper")
@@ -78,7 +79,7 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side =
     K <- sqrt(df * qchisq(P, 1, 1/n.star)/qchisq(alpha, df))
     upper <- y.hat + sigma * K
     lower <- y.hat - sigma * K
-    temp <- as.data.frame(cbind(alpha, P, y.hat, xy.data[, 1], 
+    temp <- as.data.frame(cbind(alpha, P, y.hat, yx.data[, 1], 
                                 lower, upper))
     colnames(temp) <- c("alpha", "P", "y.hat", "y", "2-sided.lower", 
                         "2-sided.upper")
@@ -86,10 +87,11 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), new.x = NULL, side =
   if (new){
     temp2 <- list()
     temp2$tol <- temp[,c(4,3,5,6)]
-    temp2$alpha.P <- c(alpha,P)
+    temp2$alpha.P.side <- c(alpha,P,side)
     temp2$reg.type <- "nlreg"
     temp2$model <- formula
     temp2$newdata <- as.data.frame(new.x)
+    temp2$yx.data.original <- yx.data.original
     temp2
   } else {
     index <- which(names(temp) == "y")
