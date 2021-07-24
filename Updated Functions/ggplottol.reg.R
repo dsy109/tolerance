@@ -1,3 +1,6 @@
+library(tolerance)
+library(plotly)
+
 ggplottol.reg <- function (tol.out,
                            x,
                            new.x = NULL,
@@ -139,9 +142,26 @@ ggplottol.reg <- function (tol.out,
           tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "npreg"){
-          print("NOTE: No predictions for data, therefore, no rectangle can be drawn.")
-          x.all <- xy.data.original[,2:3]
-          tol.all <- tol.out$tol[1:dim(xy.data.original)[1],]
+          print("NOTE: Tolerance limits for corner points are estimated based on linear model.")
+          lower.npreg <- tol.out$lower.upper[1]
+          upper.npreg <- tol.out$lower.upper[2]
+          if (lower.npreg == "NULL"){
+            lower.npreg <- NULL
+          } else {lower.npreg <- as.numeric(lower.npreg)}
+          if (upper.npreg == "NULL"){
+            upper.npreg <- NULL
+          } else {upper.npreg <- as.numeric(upper.npreg)}
+          y.npreg <- xy.data.original[,1]
+          x1.npreg <- xy.data.original[,2]
+          x2.npreg <- xy.data.original[,3]
+          corner.tol <- regtol.int2(reg = lm(y.npreg ~ x1.npreg + x2.npreg) , 
+                                    new.x = as.data.frame(rect.matrix) ,
+                                    alpha = tol.out$alpha.P.side[1],
+                                    P = tol.out$alpha.P.side[2],
+                                    side = tol.out$alpha.P.side[3] , new=TRUE)
+          x.all <- rbind(as.matrix(xy.data.original[,2:3]) , rect.matrix)
+          tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
+                           corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         }
       }
     } else if (!is.null(new.x)){
@@ -187,14 +207,31 @@ ggplottol.reg <- function (tol.out,
           tol.all <- rbind(tol.out$tol, 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "npreg"){
-          print("NOTE: No predictions for data, therefore, no rectangle can be drawn.")
-          x.all <- rbind(as.matrix(xy.data.original[,2:3]) ,
-                         as.matrix(new.x))
-          tol.all <- tol.out$tol
+          print("NOTE: New data cannot be predicted for nonparametric tolerance. \nCorner points 
+                are estimated based linear model.")
+          lower.npreg <- tol.out$lower.upper[1]
+          upper.npreg <- tol.out$lower.upper[2]
+          if (lower.npreg == "NULL"){
+            lower.npreg <- NULL
+          } else {lower.npreg <- as.numeric(lower.npreg)}
+          if (upper.npreg == "NULL"){
+            upper.npreg <- NULL
+          } else {upper.npreg <- as.numeric(upper.npreg)}
+          y.npreg <- xy.data.original[,1]
+          x1.npreg <- xy.data.original[,2]
+          x2.npreg <- xy.data.original[,3]
+          corner.tol <- regtol.int2(reg = lm(y.npreg ~ x1.npreg + x2.npreg) , 
+                                    new.x = as.data.frame(rect.matrix) ,
+                                    alpha = tol.out$alpha.P.side[1],
+                                    P = tol.out$alpha.P.side[2],
+                                    side = tol.out$alpha.P.side[3] , new=TRUE)
+          x.all <- rbind(as.matrix(xy.data.original[,2:3]) , rect.matrix)
+          tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
+                           corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         }
       } 
     }
-  }
+}
   
   alpha <- (tol.out$alpha.P)[1]
   P <- (tol.out$alpha.P)[2]
