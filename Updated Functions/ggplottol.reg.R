@@ -1,6 +1,3 @@
-library(tolerance)
-library(plotly)
-
 ggplottol.reg <- function (tol.out,
                            x,
                            new.x = NULL,
@@ -115,6 +112,9 @@ ggplottol.reg <- function (tol.out,
         x.all <- xy.data.original[,2:3]
         tol.all <- tol.out$tol[c(1:dim(xy.data.original)[1]),]
       } else if (rect){
+        if (tol.out$reg.type == "npreg"){
+          smooth <- 3
+        }
         x1.seq <- seq(from = min(xy.data.original[,2]),
                       to = max(xy.data.original[,2]) , length = smooth)
         x2.seq <- seq(from = min(xy.data.original[,3]),
@@ -142,7 +142,8 @@ ggplottol.reg <- function (tol.out,
           tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "npreg"){
-          print("NOTE: Tolerance limits for corner points are estimated based on linear model.")
+          cat("NOTE: Tolerance limits for corner points are estimated based on linear model.
+              \n'rect=FALSE' is recommanded. If 'rect=TRUE', 'smooth' paramter is fixed at value of 3.\n")
           lower.npreg <- tol.out$lower.upper[1]
           upper.npreg <- tol.out$lower.upper[2]
           if (is.na(lower.npreg)){
@@ -176,6 +177,9 @@ ggplottol.reg <- function (tol.out,
         x.all <- rbind(xy.data.original[,2:3] , new.x)
         tol.all <- tol.out$tol
       } else if (rect){
+        if (tol.out$reg.type == "npreg"){
+          smooth <- 3
+        }
         x1.seq <- seq(from = min(xy.data.original[,2] , new.x[,1]),
                       to = max(xy.data.original[,2] , new.x[,1]) , length = smooth)
         x2.seq <- seq(from = min(xy.data.original[,3] , new.x[,2]),
@@ -196,7 +200,7 @@ ggplottol.reg <- function (tol.out,
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "nlreg"){
           corner.tol <- nlregtol.int2(formula = as.formula(tol.out$model) ,
-                                      yx.data = tol.out$yx.data.original,
+                                      xy.data = tol.out$xy.data.original,
                                       new.x = rect.matrix ,
                                       alpha = tol.out$alpha.P.side[1],
                                       P = tol.out$alpha.P.side[2],
@@ -207,14 +211,15 @@ ggplottol.reg <- function (tol.out,
           tol.all <- rbind(tol.out$tol, 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "npreg"){
-          print("NOTE: New data cannot be predicted for nonparametric tolerance. \nCorner points 
-                are estimated based linear model.")
+          cat("NOTE: New data cannot be predicted for nonparametric tolerance.
+              \nCorner points are estimated based linear model.\n 
+              \n'rect=FALSE' is recommanded. If 'rect=TRUE', 'smooth' paramter is fixed at value of 3.\n")
           lower.npreg <- tol.out$lower.upper[1]
           upper.npreg <- tol.out$lower.upper[2]
-          if (lower.npreg == "NULL"){
+          if (is.na(lower.npreg)){
             lower.npreg <- NULL
           } else {lower.npreg <- as.numeric(lower.npreg)}
-          if (upper.npreg == "NULL"){
+          if (is.na(upper.npreg)){
             upper.npreg <- NULL
           } else {upper.npreg <- as.numeric(upper.npreg)}
           y.npreg <- xy.data.original[,1]
@@ -231,7 +236,7 @@ ggplottol.reg <- function (tol.out,
         }
       } 
     }
-}
+    }
   
   alpha <- (tol.out$alpha.P)[1]
   P <- (tol.out$alpha.P)[2]
