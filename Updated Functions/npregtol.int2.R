@@ -46,9 +46,9 @@ npregtol.int2 <- function (x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
     out.temp$alpha.P.side <- c(alpha,P,side)
     out.temp$reg.type  <- "npreg"
     out.temp$method <- method
-    if (is.null(lower.set)){lower.set <- "NULL"}
-    if (is.null(upper.set)){upper.set <- "NULL"}
-    out.temp$lower.upper <- c(lower.set , upper.set)
+    if (is.null(lower.set)){lower.set <- NA}
+    if (is.null(upper.set)){upper.set <- NA}
+    out.temp$lower.upper <- data.frame(Lower = lower.set , Upper = upper.set)
     out.temp
   } else{
     index <- which(names(temp) == "y.hat")
