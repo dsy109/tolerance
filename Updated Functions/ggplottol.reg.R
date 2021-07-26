@@ -145,10 +145,10 @@ ggplottol.reg <- function (tol.out,
           print("NOTE: Tolerance limits for corner points are estimated based on linear model.")
           lower.npreg <- tol.out$lower.upper[1]
           upper.npreg <- tol.out$lower.upper[2]
-          if (lower.npreg == "NULL"){
+          if (is.na(lower.npreg)){
             lower.npreg <- NULL
           } else {lower.npreg <- as.numeric(lower.npreg)}
-          if (upper.npreg == "NULL"){
+          if (is.na(upper.npreg)){
             upper.npreg <- NULL
           } else {upper.npreg <- as.numeric(upper.npreg)}
           y.npreg <- xy.data.original[,1]
