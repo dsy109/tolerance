@@ -94,17 +94,20 @@ ggplottol.reg <- function (tol.out,
   } else if (dim(xy.data.original)[2] == 2){
     if (is.null(new.x)){
       tol.order <- cbind(x,tol.out$tol[match(y,tol.out$tol$y),])[order(x),]
-    } else if (!is.null(new.x)) {
+    } else if (!is.null(new.x)){
+      if (tol.out$reg.type == "npreg"){
+        stop("No predictions can be made for nonparametric model.")
+      }
       new.x <- as.data.frame(new.x)
       new.to.use <- match(new.x[,1] , tol.out$newdata[,1])
       if (sum(is.na(new.to.use)) > 0) {
-        stop("No toletance limits generated for new data.")
+        warning("No toletance limits generated for one or more new data.")
       } else if ((min(new.x) < min(x)) | (max(new.x) > max(x))){
         print("NOTE: new data exceed the domain of original data.")
       }
-      tol.order <- cbind(c(x , new.x[,1]) , 
+      tol.order <- cbind(c(x , (new.x[,1])[!is.na(new.to.use)]) , 
                          tol.out$tol[c(1:(dim(xy.data.original)[1]) , 
-                                       (new.to.use+dim(xy.data.original)[1])),])[order(c(x , new.x[,1])),]
+                                       (new.to.use[!is.na(new.to.use)]+dim(xy.data.original)[1])),])[order(c(x , (new.x[,1])[!is.na(new.to.use)])),]
     }
   } else if (dim(xy.data.original)[2] == 3){
     if (is.null(new.x)){
@@ -144,14 +147,6 @@ ggplottol.reg <- function (tol.out,
         } else if (tol.out$reg.type == "npreg"){
           cat("NOTE: Tolerance limits for corner points are estimated based on linear model.
               \n'rect=FALSE' is recommanded. If 'rect=TRUE', 'smooth' paramter is fixed at value of 3.\n")
-          lower.npreg <- tol.out$lower.upper[1]
-          upper.npreg <- tol.out$lower.upper[2]
-          if (is.na(lower.npreg)){
-            lower.npreg <- NULL
-          } else {lower.npreg <- as.numeric(lower.npreg)}
-          if (is.na(upper.npreg)){
-            upper.npreg <- NULL
-          } else {upper.npreg <- as.numeric(upper.npreg)}
           y.npreg <- xy.data.original[,1]
           x1.npreg <- xy.data.original[,2]
           x2.npreg <- xy.data.original[,3]
@@ -160,30 +155,56 @@ ggplottol.reg <- function (tol.out,
                                     alpha = tol.out$alpha.P.side[1],
                                     P = tol.out$alpha.P.side[2],
                                     side = tol.out$alpha.P.side[3] , new=TRUE)
+          
+          np.lower <- as.numeric(tol.out$lower.upper[1])
+          np.upper <- as.numeric(tol.out$lower.upper[2])
+          if(!is.na(np.lower)){
+            corner.tol$tol[,3][which(corner.tol$tol[,3] <= np.lower)] <- np.lower
+          }
+          if(!is.na(np.upper)){
+            corner.tol$tol[,4][which(corner.tol$tol[,4] >= np.upper)] <- np.upper
+          }
+          
           x.all <- rbind(as.matrix(xy.data.original[,2:3]) , rect.matrix)
           tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         }
       }
     } else if (!is.null(new.x)){
-      new.x <- as.data.frame(new.x)
-      names(new.x) <- names(xy.data.original)[2:3]
-      
       if (dim(new.x)[2] != 2){
         stop("Please check the dimension of new data.")
       }
       
+      if (tol.out$reg.type == "npreg"){
+        stop("No predictions can be made for nonparametric model.")
+      }
+      
+      new.x <- as.data.frame(new.x)
+      match.x1 <- match(new.x[,1] , tol.out$newdata[,1])
+      match.x2 <- match(new.x[,2] , tol.out$newdata[,2])
+      
+      if (sum(match.x1 == match.x2 , na.rm=TRUE) == 0){
+        stop("No tolerance limits generated for new data. Please double-check new data.")
+      } else if (sum(!is.na(match.x1 == match.x2)) < dim(new.x)[1] |
+                 sum(match.x1 == match.x2) < dim(new.x)[1]){
+        warning("No toletance limits generated for one or more new data.")
+      }
+      
+      new.x.in.newdata <- match.x1[which(!is.na(match.x1 == match.x2))]
+      new.x.in.newdata <- new.x.in.newdata[order(new.x.in.newdata)]
+      new.x.to.use <- tol.out$newdata[new.x.in.newdata,]
+      names(new.x.to.use) <- names(xy.data.original)[2:3]
+      
       if (!rect){
-        x.all <- rbind(xy.data.original[,2:3] , new.x)
-        tol.all <- tol.out$tol
+        x.all <- rbind(xy.data.original[,2:3] , new.x.to.use)
+        tol.all <- tol.out$tol[c(1:dim(xy.data.original)[1],
+                                 new.x.in.newdata+dim(xy.data.original)[1]),]
       } else if (rect){
-        if (tol.out$reg.type == "npreg"){
-          smooth <- 3
-        }
-        x1.seq <- seq(from = min(xy.data.original[,2] , new.x[,1]),
-                      to = max(xy.data.original[,2] , new.x[,1]) , length = smooth)
-        x2.seq <- seq(from = min(xy.data.original[,3] , new.x[,2]),
-                      to = max(xy.data.original[,3] , new.x[,2]) , length = smooth)
+        
+        x1.seq <- seq(from = min(xy.data.original[,2] , new.x.to.use[,1]),
+                      to = max(xy.data.original[,2] , new.x.to.use[,1]) , length = smooth)
+        x2.seq <- seq(from = min(xy.data.original[,3] , new.x.to.use[,2]),
+                      to = max(xy.data.original[,3] , new.x.to.use[,2]) , length = smooth)
         rect.matrix <- as.matrix(rbind(cbind(x1.seq[1] , x2.seq),
                                        cbind(x1.seq[smooth] , x2.seq),
                                        cbind(x1.seq[-c(1,smooth)] , x2.seq[1]),
@@ -194,9 +215,10 @@ ggplottol.reg <- function (tol.out,
                                     P = tol.out$alpha.P.side[2],
                                     side = tol.out$alpha.P.side[3] , new=TRUE)
           x.all <- rbind(as.matrix(xy.data.original[,2:3]) ,
-                         as.matrix(new.x) , 
+                         as.matrix(new.x.to.use) , 
                          rect.matrix)
-          tol.all <- rbind(tol.out$tol, 
+          tol.all <- rbind(tol.out$tol[c(1:dim(xy.data.original)[1],
+                                         new.x.in.newdata+dim(xy.data.original)[1]),], 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         } else if (tol.out$reg.type == "nlreg"){
           corner.tol <- nlregtol.int2(formula = as.formula(tol.out$model) ,
@@ -206,40 +228,18 @@ ggplottol.reg <- function (tol.out,
                                       P = tol.out$alpha.P.side[2],
                                       side = tol.out$alpha.P.side[3] , new=TRUE)
           x.all <- rbind(as.matrix(xy.data.original[,2:3]) ,
-                         as.matrix(new.x) , 
+                         as.matrix(new.x.to.use) , 
                          rect.matrix)
-          tol.all <- rbind(tol.out$tol, 
-                           corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
-        } else if (tol.out$reg.type == "npreg"){
-          cat("NOTE: New data cannot be predicted for nonparametric tolerance.
-              \nCorner points are estimated based linear model.\n 
-              \n'rect=FALSE' is recommanded. If 'rect=TRUE', 'smooth' paramter is fixed at value of 3.\n")
-          lower.npreg <- tol.out$lower.upper[1]
-          upper.npreg <- tol.out$lower.upper[2]
-          if (is.na(lower.npreg)){
-            lower.npreg <- NULL
-          } else {lower.npreg <- as.numeric(lower.npreg)}
-          if (is.na(upper.npreg)){
-            upper.npreg <- NULL
-          } else {upper.npreg <- as.numeric(upper.npreg)}
-          y.npreg <- xy.data.original[,1]
-          x1.npreg <- xy.data.original[,2]
-          x2.npreg <- xy.data.original[,3]
-          corner.tol <- regtol.int2(reg = lm(y.npreg ~ x1.npreg + x2.npreg) , 
-                                    new.x = as.data.frame(rect.matrix) ,
-                                    alpha = tol.out$alpha.P.side[1],
-                                    P = tol.out$alpha.P.side[2],
-                                    side = tol.out$alpha.P.side[3] , new=TRUE)
-          x.all <- rbind(as.matrix(xy.data.original[,2:3]) , rect.matrix)
-          tol.all <- rbind(tol.out$tol[1:dim(xy.data.original)[1],] , 
+          tol.all <- rbind(tol.out$tol[c(1:dim(xy.data.original)[1],
+                                         new.x.in.newdata+dim(xy.data.original)[1]),], 
                            corner.tol$tol[-c(1:dim(xy.data.original)[1]),])
         }
       } 
     }
-    }
+  }
   
-  alpha <- (tol.out$alpha.P)[1]
-  P <- (tol.out$alpha.P)[2]
+  alpha <- (tol.out$alpha.P.side)[1]
+  P <- (tol.out$alpha.P.side)[2]
   #############################################################
   ### Univariate Data ###
   if (dim(xy.data.original)[2] == 2){
@@ -248,7 +248,7 @@ ggplottol.reg <- function (tol.out,
         print("NOTE: A regression through the origin is fitted!")
       }
     }
-    if (names(tol.out$tol)[3] == "1-sided.lower"){
+    if (tol.out$alpha.P.side[3] == 2){
       if (side == "upper"){
         plot <- plot_ly() %>%
           add_trace(x=xy.data.original[,2] , 
@@ -381,7 +381,7 @@ ggplottol.reg <- function (tol.out,
       }
     }
     plot <- plot_ly()
-    if (names(tol.out$tol)[3] == "1-sided.lower") {
+    if (tol.out$alpha.P.side[3] == 2) {
       if (side == "upper"){
         plot <- plot %>%
           add_markers(plot,
