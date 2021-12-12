@@ -15,9 +15,9 @@ plotly.plottol.multi <- function (tol.out,
                                   z.tick.size = NULL,
                                   x.col = NULL,
                                   x.cex = NULL,
-                                  line.type = c("dash","dot","dashdot","solid"),
                                   tol.col = NULL,
                                   tol.lwd = NULL,
+                                  tol.line.type = c("dash","dot","dashdot","solid"),
                                   title = NULL,
                                   title.position.x = NULL,
                                   title.position.y = NULL,
@@ -122,7 +122,7 @@ plotly.plottol.multi <- function (tol.out,
                 marker = list(color = x.col , size = x.cex) , 
                 name = 'Data' , showlegend = FALSE) %>%
       add_trace(x=pts[,1] , y=pts[,2] , type = 'scatter' , mode = 'lines' ,
-                line = list(color = tol.col , width = tol.lwd , dash='dash') , 
+                line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                 name = 'Tolerance Region' , showlegend = FALSE) %>%
       layout(
         title = list(text = title,
@@ -202,7 +202,7 @@ out1 <- mvtol.region(x = x, alpha = 0.10, P = 0.90, B = 1000,
                      method = "KM")
 out1
 plotly.plottol.multi(out1, x , x.lab = "X1" , y.lab = "X2",
-                     x.cex = 22 , tol.lwd = 18, line.type = "dot",
+                     x.cex = 22 , tol.lwd = 18, tol.line.type = "dash",
                      x.tick.size = 36 , x.lab.size = 36,
                      y.tick.size = 36 , y.lab.size = 36,
                      title.size = 36 , title.position.y = 0.995)
