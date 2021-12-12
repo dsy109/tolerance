@@ -1,232 +1,62 @@
-library(tolerance)
-library(plotly)
+\name{plotly.plottol.control}
+\alias{plotly.plottol.control}
 
-plotly.plottol.control <- function (tol.out , 
-                               x , 
-                               side = c("two","upper", "lower"),
-                               x.lab = NULL,
-                               x.lab.size = NULL,
-                               y.lab = NULL,
-                               y.lab.size = NULL,
-                               x.tick.size = NULL,
-                               y.tick.size = NULL,
-                               x.col = NULL,
-                               x.cex = NULL,
-                               fit.col = NULL,
-                               fit.lwd = NULL,
-                               fit.line.type = c("solid","dash","dot","dashdot"),
-                               tol.col = NULL,
-                               tol.lwd = NULL,
-                               tol.line.type = c("dash","dot","dashdot","solid"),
-                               title.position.x = NULL,
-                               title.position.y = NULL,
-                               title.size = NULL,
-                               title = NULL) {
-  if (is.null(x.lab)) {
-    x.lab <- 'X'
-  }
-  if (is.null(x.lab.size)) {
-    x.lab.size <- 15
-  }
-  if (is.null(y.lab)) {
-    y.lab <- 'Y'
-  } 
-  if (is.null(y.lab.size)) {
-    y.lab.size <- 15
-  }
-  if (is.null(x.tick.size)) {
-    x.tick.size <- 15
-  }
-  if (is.null(y.tick.size)) {
-    y.tick.size <- 15
-  }
-  if (is.null(x.col)) {
-    x.col <- "#1f77b4"
-  } 
-  if (is.null(x.cex)) {
-    x.cex <- 6
-  }
-  if (is.null(fit.col)) {
-    fit.col <- "#1f77b4"
-  } 
-  if (is.null(fit.lwd)) {
-    fit.lwd <- 2
-  }
-  if (is.null(tol.col)) {
-    tol.col <- "#d62728"
-  } 
-  if (is.null(tol.lwd)) {
-    tol.lwd <- 2
-  }
-  if (is.null(title.position.x)) {
-    title.position.x <- 0.5
-  }
-  if (is.null(title.position.y)) {
-    title.position.y <- 0.95
-  }
-  if (is.null(title.size)) {
-    title.size <- 15
-  }
-  ###### If X length is 1 ######
-  if (length(x) == 1) {
-    stop(paste("There are no plots produced for discrete distribution tolerance intervals.", 
-               "\n"))
-  }
-  ###### If X is a dataset ######
-  else {
-    if (is.matrix(x)) {
-      P <- as.numeric(rownames(tol.out))[1]
-      alpha <- 1 - as.numeric(colnames(tol.out))[1]
-    }
-    else {
-      side <- match.arg(side)
-      alpha <- 1 - tol.out[1, 1]
-      P <- tol.out[1, 2]
-      out <- tol.out
-      n.c <- ncol(tol.out)
-      n.r <- nrow(tol.out)
-      if (max(tol.out[ , n.c]) == Inf) 
-      {tol.out[ , n.c] <- max(x)}
-      if (min(tol.out[ , (n.c - 1)]) == -Inf) 
-      {tol.out[ , n.c] <- min(x)}
-    }
-    
-    if (colnames(tol.out)[(n.c - 1)] == "1-sided.lower") {
-      if (side == "lower") {
-        if (is.null(title)){
-          title <- paste("One-Sided " , alpha * 100, "% / ", P * 100, 
-                         "% Lower Tolerance Limit", sep = "")
-        }
-        
-        plot_ly() %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
-                    marker = list(color = x.col , size = x.cex) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'lines' ,
-                    line = list(dash = fit.line.type , color = fit.col , width = fit.lwd) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          layout(
-            title = list(text = title,
-                         x = title.position.x,
-                         y = title.position.y,
-                         font = list(size=title.size)),
-            xaxis = list(title = x.lab,
-                         tickfont = list(size = x.tick.size),
-                         titlefont = list(size = x.lab.size)),
-            yaxis = list(title = y.lab,
-                         tickfont = list(size = y.tick.size),
-                         titlefont = list(size = y.lab.size))
-          ) %>%
-          add_segments(x = 1 , xend = length(x) ,
-                       y = out[, (n.c - 1)] , yend = out[, (n.c - 1)] ,
-                       line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                       name='Lower <br>Limit' ,
-                       showlegend = FALSE)
-      } else if (side == "upper") {
-        if (is.null(title)){
-          title <- paste("One-Sided " , alpha * 100, "% / ", P * 100, 
-                         "% Upper Tolerance Limit", sep = "")
-        }
-        
-        plot_ly() %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
-                    marker = list(color = x.col , size = x.cex) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'lines' ,
-                    line = list(dash = fit.line.type , color = fit.col , width = fit.lwd) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          layout(
-            title = list(text = title,
-                         x = title.position.x,
-                         y = title.position.y,
-                         font = list(size=title.size)),
-            xaxis = list(title = x.lab,
-                         tickfont = list(size = x.tick.size),
-                         titlefont = list(size = x.lab.size)),
-            yaxis = list(title = y.lab,
-                         tickfont = list(size = y.tick.size),
-                         titlefont = list(size = y.lab.size))
-          ) %>%
-          add_segments(x = 1 , xend = length(x) ,
-                       y = out[, (n.c)] , yend = out[, (n.c)] ,
-                       line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                       name='Upper <br>Limit' ,
-                       showlegend = FALSE)
-      } else if (side == "two"){
-        if (is.null(title)){
-          title <- paste("One-Sided ", alpha * 100, "% / ", P * 100, 
-                         "% Tolerance Limits", sep = "")
-        }
-        print("NOTE: The plot reflects two 1-sided tolerance intervals and NOT a 2-sided tolerance interval!")
-        plot_ly() %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
-                    marker = list(color = x.col , size = x.cex) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'lines' ,
-                    line = list(dash = fit.line.type , color = fit.col , width = fit.lwd) , 
-                    name = 'Data' , showlegend = FALSE) %>%
-          layout(
-            title = list(text = title,
-                         x = title.position.x,
-                         y = title.position.y,
-                         font = list(size=title.size)),
-            xaxis = list(title = x.lab,
-                         tickfont = list(size = x.tick.size),
-                         titlefont = list(size = x.lab.size)),
-            yaxis = list(title = y.lab,
-                         tickfont = list(size = y.tick.size),
-                         titlefont = list(size = y.lab.size))
-          ) %>%
-          add_segments(x = 1 , xend = length(x) ,
-                       y = out[, (n.c - 1)] , yend = out[, (n.c - 1)] ,
-                       line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                       name='Lower <br>Limit' ,
-                       showlegend = FALSE) %>%
-          add_segments(x = 1 , xend = length(x) ,
-                       y = out[, (n.c)] , yend = out[, (n.c)] ,
-                       line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                       name='Upper <br>Limit' ,
-                       showlegend = FALSE)
-      }
-    }
-    else {
-      if (is.null(title)){
-        title <- paste("Two-Sided " , alpha * 100, "% / ", P * 100, 
-                       "% Tolerance Limits", sep = "")
-      }
-      plot_ly() %>%
-        add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
-                  marker = list(color = x.col , size = x.cex) , 
-                  name = 'Data' , showlegend = FALSE) %>%
-        add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'lines' ,
-                  line = list(dash = fit.line.type , color = fit.col , width = fit.lwd) ,
-                  name = 'Data' , showlegend = FALSE) %>%
-        layout(
-          title = list(text = title,
-                       x = title.position.x,
-                       y = title.position.y,
-                       font = list(size=title.size)),
-          xaxis = list(title = x.lab,
-                       tickfont = list(size = x.tick.size),
-                       titlefont = list(size = x.lab.size)),
-          yaxis = list(title = y.lab,
-                       tickfont = list(size = y.tick.size),
-                       titlefont = list(size = y.lab.size))
-        ) %>%
-        add_segments(x = 1 , xend = length(x) ,
-                     y = out[, (n.c - 1)] , yend = out[, (n.c - 1)] ,
-                     line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                     name='Lower <br>Limit' ,
-                     showlegend = FALSE) %>%
-        add_segments(x = 1 , xend = length(x) ,
-                     y = out[, (n.c)] , yend = out[, (n.c)] ,
-                     line = list(dash = tol.line.type , color=tol.col , width = tol.lwd) , 
-                     name='Upper <br>Limit' ,
-                     showlegend = FALSE)
-    }
-  }
+\title{
+Plotting Tolerance Intervals for Control Charts
+}
+\description{
+Provides interactive control charts for tolerance bounds on continuous data.
+}
+\usage{
+plotly.plottol.control(tol.out , x , side = c("two","upper", "lower"),
+                       x.lab = NULL, x.lab.size = NULL,
+                       y.lab = NULL, y.lab.size = NULL,
+                       x.tick.size = NULL, y.tick.size = NULL,
+                       x.col = NULL, x.cex = NULL,
+                       fit.col = NULL, fit.lwd = NULL,
+                       fit.line.type = c("solid","dash","dot","dashdot"),
+                       tol.col = NULL, tol.lwd = NULL,
+                       tol.line.type = c("dash","dot","dashdot","solid"),
+                       title = NULL, title.size = NULL
+                       title.position.x = NULL, title.position.y = NULL)
 }
 
+\arguments{
+  \item{tol.out}{Output from any continuous tolerance interval procedure.}
+  \item{x}{Data from a continuous distribution.}
+  \item{side}{\code{side = "two"} produces plots for either the two-sided tolerance intervals or both one-sided tolerance intervals. This will be determined by the output in \code{tol.out}. \code{side = "upper"} produces plots showing the upper tolerance bounds.  \code{side = "lower"} produces plots showing the lower tolerance bounds. Note that if the output of in \code{tol.out} shows 2-sided tolerance intervals, \code{side = "upper"} and \code{side = "lower"} still shows both upper AND lower tolerance intervals.}
+  \item{x.lab}{Label of the x-axis.}
+  \item{x.lab.size}{Size of label of the x-axis.}
+  \item{y.lab}{Label of the y-axis.}
+  \item{y.lab.size}{Size of label of the y-axis.}
+  \item{x.tick.size}{Size of tick marks on the x-axis.}
+  \item{y.tick.size}{Size of tick marks on the y-axis.}
+  \item{x.col}{Color of original data points.}                          
+  \item{x.cex}{Size of original data points.}
+  \item{fit.col}{Color of fitted line.}
+  \item{fit.lwd}{Width of fitted line.}
+  \item{fit.line.type}{Type of the fitted line.}
+  \item{tol.col}{Color of the tolerance intervals when \code{tol.out} shows 2-sided tolerance intervals.}
+  \item{tol.lwd}{Width of the tolerance intervals when \code{tol.out} shows 2-sided tolerance intervals.}
+  \item{tol.line.type}{Line type of tolerance intervals.}
+  \item{title}{The main title on top of the plot.}
+  \item{title.size}{Size of the title.}
+  \item{title.position.x}{Horizontal position of the title.}
+  \item{title.position.y}{Vertical position of the title.}
+}
+\value{
+ \code{plotly.plottol.control} can return boxplots as well as corresponding tolerance intervals for any continuous data.
+}
+
+\seealso{
+ \code\link{plottol}
+}
+
+\references{
+  Montgomery, D. C. (2005), \emph{Introduction to Statistical Quality Control}, Fifth Edition, John Wiley & Sons, Inc.
+}
+
+\examples{
 ## 95%/85% 2-sided Bayesian normal tolerance limits for
 ## a sample of size 100.
 set.seed(100)
@@ -237,3 +67,4 @@ out <- bayesnormtol.int(x = x, alpha = 0.05, P = 0.85,
                                          sig2.0 = 1, n.0 = 10, m.0 = 10))
 out
 plotly.plottol.control(out, x, x.lab = "Normal Data")
+}
