@@ -8,12 +8,13 @@ Plotting Histograms and Corresponding Tolerance Intervals for Continuous Data
 Provides interactive tolerance intervals for continous data based on its histogram.
 }
 \usage{
-plotly.plottol.hist(tol.out, x, side = c("two", "upper", "lower"),
-               x.lab = NULL, x.lab.size = NULL, x.tick.size = NULL,
-               y.lab.size = NULL, y.tick.size = NULL,
-               title.size = NULL, title.position.x = NULL, title.position.y = NULL,
-               bin.col = NULL, 
-               tol.col = NULL, tol.lwd = NULL)
+plotly.plottol.hist(tol.out, x, side = c("two","upper", "lower"),
+                    x.lab = NULL, x.lab.size = NULL, x.tick.size = NULL,
+                    y.lab.size = NULL, y.tick.size = NULL,
+                    title = NULL, title.size = NULL,
+                    title.position.x = NULL, title.position.y = NULL,
+                    bin.col = NULL, tol.col = NULL, tol.lwd = NULL,
+                    tol.line.type = c("dash","dot","dashdot","solid"))
 }
 
 \arguments{
@@ -25,12 +26,14 @@ plotly.plottol.hist(tol.out, x, side = c("two", "upper", "lower"),
   \item{x.tick.size}{Size of tick marks on the x-axis.}
   \item{y.lab.size}{Size of label of the y-axis.}
   \item{y.tick.size}{Size of tick marks on the y-axis.}
+  \item{title}{The main title on top of the histogram.}
   \item{title.size}{Size of the title.}
   \item{title.position.x}{Horizontal position of the title.}
   \item{title.position.y}{Vertical position of the title.}
   \item{bin.col}{Color of the bins.}
   \item{tol.col}{Color of the tolerance interval(s).}
   \item{tol.lwd}{Width of the tolerance interval(s).}
+  \item{tol.line.type}{Line type of the tolerance interval(s).}
 }
 \value{
  \code{plotly.plottol.hist} can return histograms as well as corresponding tolerance intervals for any continuous data.
