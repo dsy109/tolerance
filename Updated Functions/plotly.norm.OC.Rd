@@ -3,15 +3,17 @@
 (a \code{plotly} version of \code{norm.OC})}
 \alias{plotly.norm.OC}
 \usage{
-plotly.norm.OC(k = NULL, alpha = NULL, P = NULL, n, side = 1,
-        method = c("HE", "HE2", "WBE", "ELL", "KM", "EXACT", 
-        "OCT"), m = 50,
-        range.min = NULL, range.max = NULL,
-        x.lab.size = NULL, y.lab.size = NULL,
-        x.tick.size = NULL, y.tick.size = NULL,
-        title.size = NULL, title.position.x = NULL, title.position.y = NULL,
-        legend.size = NULL,
-        x.cex = NULL, x.lwd = NULL)
+plotly.norm.OC(k = NULL, alpha = NULL, P = NULL,
+               n, side = 1,
+               method = c("HE", "HE2", "WBE", "ELL", "KM", "EXACT", "OCT"), 
+               m = 50,
+               range.min = NULL, range.max = NULL,
+               x.lab.size = NULL, y.lab.size = NULL,
+               x.tick.size = NULL, y.tick.size = NULL,
+               title = NULL, title.size = NULL,
+               title.position.x = NULL, title.position.y = NULL,
+               legend.size = NULL, x.cex = NULL,
+               line.width = NULL, line.type = c("solid","dash","dot","dashdot"))
 }
 \description{
 \code{plotly.norm.OC} is an updated function rooted in \code{norm.OC}
@@ -38,12 +40,14 @@ plotly.norm.OC(k = NULL, alpha = NULL, P = NULL, n, side = 1,
   \item{y.lab.size}{Size of label of the y-axis.}
   \item{x.tick.size}{Size of tick marks on the x-axis.}
   \item{y.tick.size}{Sze of tick marks on the y-axis.}
+  \item{title}{The main title on top of the plot.}
   \item{title.size}{Size of the title.}
   \item{title.position.x}{Horizontal position of the title.}
   \item{title.position.y}{Vertical position of the title.}
   \item{legend.size}{Size of the legend.}
   \item{x.cex}{Size of data points.}
-  \item{x.lwd}{Width of lines connecting data points.}
+  \item{line.width}{Width of lines connecting data points.}
+  \item{line.type}{The type of lines connection data points. }
 } 
 
 \value{
@@ -72,7 +76,3 @@ plotly.norm.OC(k = NULL, P = c(0.90, 0.95, 0.99),
 }
 
 \keyword{file}
-
-
-
-
