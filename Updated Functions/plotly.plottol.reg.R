@@ -21,11 +21,11 @@ plotly.plottol.reg <- function (tol.out,
                                 x.cex = NULL,
                                 fit.col = NULL,
                                 fit.lwd = NULL,
-                                fit.type = c("dash","dot","dashdot","solid"),
+                                fit.line.type = c("dash","dot","dashdot","solid"),
                                 fit.opacity = NULL,
                                 tol.col = NULL,
                                 tol.lwd = NULL,
-                                tol.type = c("dash","dot","dashdot","solid"),
+                                tol.line.type = c("dash","dot","dashdot","solid"),
                                 tol.opacity = NULL,
                                 title.position.x = NULL,
                                 title.position.y = NULL,
@@ -271,11 +271,11 @@ plotly.plottol.reg <- function (tol.out,
                     name = 'Data' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order$y.hat , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = fit.col , width = fit.lwd , dash=fit.type) , 
+                    line = list(color = fit.col , width = fit.lwd , dash=fit.line.type) , 
                     name = 'Fitted Line' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order[,5] , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                    line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                     name = 'Upper Limit' , showlegend = FALSE) %>%
           layout(
             title = list(text = title,
@@ -302,11 +302,11 @@ plotly.plottol.reg <- function (tol.out,
                     name = 'Data' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order$y.hat , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = fit.col , width = fit.lwd , dash=fit.type) , 
+                    line = list(color = fit.col , width = fit.lwd , dash=fit.line.type) , 
                     name = 'Fitted Line' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order[,4] , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                    line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                     name = 'Lower Limit' , showlegend = FALSE) %>%
           layout(
             title = list(text = title,
@@ -334,15 +334,15 @@ plotly.plottol.reg <- function (tol.out,
                     name = 'Data' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order$y.hat , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = fit.col , width = fit.lwd , dash=fit.type) , 
+                    line = list(color = fit.col , width = fit.lwd , dash=fit.line.type) , 
                     name = 'Fitted Line' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order[,4] , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                    line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                     name = 'Lower Limit' , showlegend = FALSE) %>%
           add_trace(x=tol.order[,1] , 
                     y=tol.order[,5] , type = 'scatter' , mode = 'lines' ,
-                    line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                    line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                     name = 'Upper Limit' , showlegend = FALSE) %>%
           layout(
             title = list(text = title,
@@ -370,15 +370,15 @@ plotly.plottol.reg <- function (tol.out,
                   name = 'Data' , showlegend = FALSE) %>%
         add_trace(x=tol.order[,1] , 
                   y=tol.order$y.hat , type = 'scatter' , mode = 'lines' ,
-                  line = list(color = fit.col , width = fit.lwd , dash=fit.type) , 
+                  line = list(color = fit.col , width = fit.lwd , dash=fit.line.type) , 
                   name = 'Fitted Line' , showlegend = FALSE) %>%
         add_trace(x=tol.order[,1] , 
                   y=tol.order[,4] , type = 'scatter' , mode = 'lines' ,
-                  line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                  line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                   name = 'Lower Limit' , showlegend = FALSE) %>%
         add_trace(x=tol.order[,1] , 
                   y=tol.order[,5] , type = 'scatter' , mode = 'lines' ,
-                  line = list(color = tol.col , width = tol.lwd , dash=tol.type) , 
+                  line = list(color = tol.col , width = tol.lwd , dash=tol.line.type) , 
                   name = 'Upper Limit' , showlegend = FALSE) %>%
         layout(
           title = list(text = title,
@@ -605,7 +605,8 @@ x <- runif(100, 0, 10)
 y <- 20 + 5*x + rnorm(100, 0, 3)
 out1 <- regtol.int2(reg = lm(y ~ x), new.x = c(3,6,20),new=TRUE,
                     side = 1, alpha = 0.05, P = 0.95)
-plotly.plottol.reg(tol.out = out1 , x=x , y=y , new.x = c(6,20), side = "two")
+plotly.plottol.reg(tol.out = out1 , x=x , y=y , new.x = c(6,20), side = "two" ,
+                   fit.line.type = "dash" , tol.line.type = "solid")
 ########################
 set.seed(100)
 x1 <- runif(100, 0, 10)
@@ -630,24 +631,10 @@ out1 <- nlregtol.int2(formula = formula,
                       xy.data = data.frame(cbind(y, x)),
                       x.new=c(10,20,50), side = 2,
                       alpha = 0.05, P = 0.95)
-plotly.plottol.reg(tol.out = out1 , x=x , y=y , new.x = c(20,50) , side = "two")
-#########
-set.seed(100)
-x1 <- runif(50, 5, 45)
-x2 <- rnorm(50, 0, 10)
-f1 <- function(x1, x2, b1, b2) {(0.49 - b1)*exp(-b2*(x1 + x2 - 8)) +
-    rnorm(50, sd = 0.01)}
-y <- f1(x1 , x2 , 0.25 , 0.39)
-formula <- as.formula(y ~ (0.49 - b1)*exp(-b2*(x1 + x2 - 8)))
-out2 <- nlregtol.int2(formula = formula,
-                      xy.data = data.frame(cbind(y, x1 , x2)),
-                      new.x=cbind(c(10,20) , c(47 , 53)), side = 2,
-                      alpha = 0.05, P = 0.95)
-plotly.plottol.reg(tol.out = out2 , y=y , x=cbind(x1,x2) , 
-                   new.x=cbind(c(10,20,30) , c(47,53,60)),
-                   rect = TRUE , smooth = 10 ,  side = "two")
-
+plotly.plottol.reg(tol.out = out1 , x=x , y=y , new.x = c(20,50) , side = "two",
+                   fit.line.type = "dot")
 ###############
+
 ## 95%/95% 1-sided nonparametric regression tolerance bounds
 ## for a sample of size 50.
 set.seed(100)
@@ -657,7 +644,7 @@ y <- f1(x, 0.39, 0.11)
 y.hat <- loess(y~x)$fit
 out1 <- npregtol.int2(x = x, y = y, y.hat = y.hat, side = 1, new=TRUE,
                       alpha = 0.05, P = 0.95, method = "WILKS")
-plotly.plottol.reg(tol.out = out1 , x=x , y=y , side = "two")
+plotly.plottol.reg(tol.out = out1 , x=x , y=y , side = "two" , fit.line.type = "dash")
 ############
 set.seed(100)
 x1 <- runif(50, 5, 45)
