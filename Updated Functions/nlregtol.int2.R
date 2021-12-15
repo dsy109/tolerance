@@ -1,5 +1,5 @@
 nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side = 1, 
-                           alpha = 0.05, P = 0.99, maxiter = 50, new=TRUE, ...) 
+                           alpha = 0.05, P = 0.99, maxiter = 50, new = FALSE, ...) 
 {
   xy.data.original <- xy.data
   n <- nrow(xy.data)
@@ -114,7 +114,7 @@ formula <- as.formula(y ~ b1 + (0.49 - b1)*exp(-b2*(x - 8)))
 out1 <- nlregtol.int2(formula = formula,
                       xy.data = data.frame(cbind(y, x)),
                       x.new=c(10,20), side = 2,
-                      alpha = 0.05, P = 0.95)
+                      alpha = 0.05, P = 0.95 , new = TRUE)
 out1
 #########
 set.seed(100)
@@ -127,5 +127,5 @@ formula <- as.formula(y ~ (0.49 - b1)*exp(-b2*(x1 + x2 - 8)))
 out2 <- nlregtol.int2(formula = formula,
                       xy.data = data.frame(cbind(y, x1 , x2)),
                       x.new=cbind(c(10,20) , c(47 , 53)), side = 2,
-                      alpha = 0.05, P = 0.95)
+                      alpha = 0.05, P = 0.95 , new = TRUE)
 out2
