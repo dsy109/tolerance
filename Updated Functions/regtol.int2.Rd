@@ -1,0 +1,53 @@
+\name{regtol.int2}
+\title{(Multiple) Linear Regression Tolerance Bounds, Version 2}
+\alias{regtol.int2}
+\usage{
+  regtol.int2(reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99 , new = FALSE) 
+}
+\description{
+  Provides 1-sided or 2-sided (multiple) linear regression tolerance bounds.  It is also possible to fit a 
+  regression through the origin model.
+}
+
+\arguments{
+  \item{reg}{An object of class \code{lm} (i.e., the results from a linear regression routine).}
+  \item{new.x}{An optional data frame in which to look for variables with which to predict. If omitted, the fitted values are used.}
+  \item{side}{Whether a 1-sided or 2-sided tolerance bound is required (determined by \code{side = 1} or \code{side = 2},
+                                                                        respectively).} 
+  \item{alpha}{The level chosen such that \code{1-alpha} is the confidence level.}
+  \item{P}{The proportion of the population to be covered by the tolerance bound(s).}
+  \item{new}{When \code{new=TRUE}, the function shows updated version of outcomes.}
+} 
+\value{
+  \code{regtol.int2} returns a list with items:
+  \item{tol}{Data frame of original response varible \code{y}, fitted values \code{y.hat}, corresponding tolerance limits. The data frame is ordered by \code{X} values. If there are new data for prediction, predicted values are attached in the end.}
+  \item{alpha.P.side}{Model specifications of critical level, content level and side.}
+  \item{reg.type}{Type of regression model.}
+  \item{model}{The linear regression model fitted.}
+  \item{newdata}{X values of new data for prediction.}
+} 
+
+\references{
+  Wallis, W. A. (1951), Tolerance Intervals for Linear Regression, in \emph{Second Berkeley Symposium on Mathematical
+    Statistics and Probability}, ed. J. Neyman, Berkeley: University of CA Press, 43--51.
+  
+  Young, D. S. (2013), Regression Tolerance Intervals, \emph{Communications in Statistics - Simulation and Computation}, \bold{42}, 2040--2055.
+} 
+
+\seealso{
+  \code{\link{lm}}, \code{regtol.int}
+}
+
+\examples{ 
+## 95%/95% 2-sided linear regression tolerance bounds
+## for a sample of size 100.
+set.seed(100)
+x <- runif(100, 0, 10)
+y <- 20 + 5*x + rnorm(100, 0, 3)
+out <- regtol.int2(reg = lm(y ~ x), new.x = data.frame(x = c(3, 6, 9)),
+                  side = 2, alpha = 0.05, P = 0.95 , new = TRUE)
+out
+  
+}
+
+\keyword{file}
