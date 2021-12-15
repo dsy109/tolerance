@@ -68,3 +68,12 @@ regtol.int2 <- function (reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, ne
     temp
   }
 }
+
+## 95%/95% 2-sided linear regression tolerance bounds
+## for a sample of size 100.
+set.seed(100)
+x <- runif(100, 0, 10)
+y <- 20 + 5*x + rnorm(100, 0, 3)
+out <- regtol.int2(reg = lm(y ~ x), new.x = data.frame(x = c(3, 6, 9)),
+                  side = 2, alpha = 0.05, P = 0.95 , new = TRUE)
+out
