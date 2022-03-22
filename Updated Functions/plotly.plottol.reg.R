@@ -627,7 +627,7 @@ f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) +
   rnorm(50, sd = 0.01)
 y <- f1(x, 0.39, 0.11)
 formula <- as.formula(y ~ b1 + (0.49 - b1)*exp(-b2*(x - 8)))
-out1 <- nlregtol.int2(formula = formula,
+out1 <- nlregtol.int2(formula = formula, new=TRUE,
                       xy.data = data.frame(cbind(y, x)),
                       x.new=c(10,20,50), side = 2,
                       alpha = 0.05, P = 0.95)
