@@ -50,9 +50,9 @@ mdepth <- function(pts, x){
 
 set.seed(100)
 x <- cbind(rnorm(100), rnorm(100), rnorm(100))
-out <-npmvtol.region(x = x, alpha = 0.10, P = 0.95, depth.fn = mdepth,
-                     type = "semispace", semi.order = list(lower = 2, 
-                     center = 3, upper = 1))
+out <- npmvtol.region(x = x, alpha = 0.10, P = 0.95, depth.fn = mdepth,
+                      type = "semispace", semi.order = list(lower = 2, 
+                      center = 3, upper = 1))
 out
 }
 
