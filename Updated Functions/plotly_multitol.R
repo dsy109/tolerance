@@ -91,7 +91,6 @@ plotly_multitol <- function (tol.out,
     alpha <- 1 - as.numeric(colnames(tol.out))[1]
   }
   else {
-    side <- match.arg(side)
     alpha <- 1 - tol.out[1, 1]
     P <- tol.out[1, 2]
     out <- tol.out
