@@ -24,7 +24,7 @@ nlregtol.int2 <- function (formula, xy.data = data.frame(), x.new = NULL, side =
   colnames(temp) <- beta.names
   pars <- length(beta.hat)
   (fx <- deriv(form, beta.names))
-  P.mat <- with(temp, attr(eval(fx), "gradient"))
+  with(temp, attr(eval(fx, xy.data.original), "gradient"))
   PTP <- t(P.mat) %*% P.mat
   PTP2 <- try(solve(PTP), silent = TRUE)
   test.PTP <- class(PTP2)[1]
