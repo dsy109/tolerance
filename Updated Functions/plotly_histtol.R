@@ -1,5 +1,5 @@
-library(tolerance)
-library(plotly)
+#library(tolerance)
+#library(plotly)
 
 plotly_histtol <- function (tol.out, 
                                  x,  
@@ -198,10 +198,10 @@ plotly_histtol <- function (tol.out,
 
 ## 90%/90% 1-sided Weibull tolerance intervals for a sample
 ## of size 150.
-set.seed(100)
-x <- rweibull(150, 3, 75)
-out <- exttol.int(x = x, alpha = 0.15, P = 0.90,
-                  side=1 , dist = "Weibull")
-out
-plotly_histtol(out, x, x.lab = "Weibull Data" , tol.lwd = 3 , side="two")
+#set.seed(100)
+#x <- rweibull(150, 3, 75)
+#out <- exttol.int(x = x, alpha = 0.15, P = 0.90,
+#                  side=1 , dist = "Weibull")
+#out
+#plotly_histtol(out, x, x.lab = "Weibull Data" , tol.lwd = 3 , side="two")
 
