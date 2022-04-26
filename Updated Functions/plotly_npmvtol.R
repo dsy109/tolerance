@@ -1,5 +1,5 @@
-library(plotly)
-library(tolerance)
+#library(plotly)
+#library(tolerance)
 
 plotly_npmvtol <- function(tol.out , x , 
                            var.names = NULL , 
@@ -200,35 +200,35 @@ plotly_npmvtol <- function(tol.out , x ,
 ###############
 ### Example ###
 ###############
-mdepth <- function(pts, x){
-  mahalanobis(pts, center = rep(0, 3),
-              cov = diag(1, 3))
-}
+#mdepth <- function(pts, x){
+#  mahalanobis(pts, center = rep(0, 3),
+#              cov = diag(1, 3))
+#}
 
-set.seed(100)
-x <- cbind(X1=rnorm(300), X2=rnorm(300), X3=rnorm(300))
-out <-npmvtol.region(x = x, alpha = 0.10, P = 0.90, depth.fn = mdepth,
-                     type = "semispace", semi.order = list(lower = 2, 
-                                                           center = 3, upper = 1))
+#set.seed(100)
+#x <- cbind(X1=rnorm(300), X2=rnorm(300), X3=rnorm(300))
+#out <-npmvtol.region(x = x, alpha = 0.10, P = 0.90, depth.fn = mdepth,
+#                     type = "semispace", semi.order = list(lower = 2, 
+#                                                           center = 3, upper = 1))
 
-gg.out <- plotly_npmvtol(out,x,
-                         var.names = c("a","b","c") , 
-                         title = "Informative Title for Tolerance Region",
-                         x.col = "#4298B5",
-                         x.cex = 6 ,
-                         x.shape = "dot",
-                         outlier.col = "#A6192E",
-                         outlier.cex = 8,
-                         outlier.shape = "triangle-up",
-                         tol.col = "#D1DDE6",
-                         tol.opacity = 0.4,
-                         x.lab.size = 12,
-                         x.tick.size = 12,
-                         y.lab.size = 12,
-                         y.tick.size = 12,
-                         title.position.x = 0.5,
-                         title.position.y = 0.98,
-                         title.size = 12,
-                         show.bound = TRUE , bound.type = "dot" , 
-                         bound.lwd = 4 , bound.col = "red")
+#gg.out <- plotly_npmvtol(out,x,
+#                         var.names = c("a","b","c") , 
+#                         title = "Informative Title for Tolerance Region",
+#                         x.col = "#4298B5",
+#                         x.cex = 6 ,
+#                         x.shape = "dot",
+#                         outlier.col = "#A6192E",
+#                         outlier.cex = 8,
+#                         outlier.shape = "triangle-up",
+#                         tol.col = "#D1DDE6",
+#                         tol.opacity = 0.4,
+#                         x.lab.size = 12,
+#                         x.tick.size = 12,
+#                         y.lab.size = 12,
+#                         y.tick.size = 12,
+#                         title.position.x = 0.5,
+#                         title.position.y = 0.98,
+#                         title.size = 12,
+#                         show.bound = TRUE , bound.type = "dot" , 
+#                         bound.lwd = 4 , bound.col = "red")
 
