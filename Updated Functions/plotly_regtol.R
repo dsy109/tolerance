@@ -1,5 +1,5 @@
-library(tolerance)
-library(plotly)
+#library(tolerance)
+#library(plotly)
 
 plotly_regtol <- function (tol.out,
                                 x,
@@ -600,59 +600,59 @@ plotly_regtol <- function (tol.out,
 ## 95%/95% 1-sided linear regression tolerance bounds
 ## for a sample of size 100.
 
-set.seed(100)
-x <- runif(100, 0, 10)
-y <- 20 + 5*x + rnorm(100, 0, 3)
-out1 <- regtol.int2(reg = lm(y ~ x), new.x = c(3,6,20),new=TRUE,
-                    side = 1, alpha = 0.05, P = 0.95)
-plotly_regtol(tol.out = out1 , x=x , y=y , new.x = c(6,20), side = "two" ,
-              fit.line.type = "dash" , tol.line.type = "solid")
+#set.seed(100)
+#x <- runif(100, 0, 10)
+#y <- 20 + 5*x + rnorm(100, 0, 3)
+#out1 <- regtol.int2(reg = lm(y ~ x), new.x = c(3,6,20),new=TRUE,
+#                    side = 1, alpha = 0.05, P = 0.95)
+#plotly_regtol(tol.out = out1 , x=x , y=y , new.x = c(6,20), side = "two" ,
+#              fit.line.type = "dash" , tol.line.type = "solid")
 ########################
-set.seed(100)
-x1 <- runif(100, 0, 10)
-x2 <- rpois(100 , 5)
-y <- 20 + 5*x1 + 3*x2 + rnorm(100, 0, 3)
-x1.new <- runif(10 , 0 , 10)
-x2.new <- rpois(10 , 5)
-out2 <- regtol.int2(reg = lm(y ~ x1 + x2), new.x = cbind(x1.new , x2.new), new=TRUE,
-                    side = 1, alpha = 0.05, P = 0.95)
-plotly_regtol(tol.out = out2 , y=y , x=cbind(x1,x2) , new.x = cbind(x1.new , x2.new) , 
-              rect = TRUE , side = "two")
+#set.seed(100)
+#x1 <- runif(100, 0, 10)
+#x2 <- rpois(100 , 5)
+#y <- 20 + 5*x1 + 3*x2 + rnorm(100, 0, 3)
+#x1.new <- runif(10 , 0 , 10)
+#x2.new <- rpois(10 , 5)
+#out2 <- regtol.int2(reg = lm(y ~ x1 + x2), new.x = cbind(x1.new , x2.new), new=TRUE,
+#                    side = 1, alpha = 0.05, P = 0.95)
+#plotly_regtol(tol.out = out2 , y=y , x=cbind(x1,x2) , new.x = cbind(x1.new , x2.new) , 
+#              rect = TRUE , side = "two")
 ###########################
 ## 95%/95% 2-sided nonlinear regression tolerance bounds
 ## for a sample of size 50.
-set.seed(100)
-x <- runif(50, 5, 45)
-f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) +
-  rnorm(50, sd = 0.01)
-y <- f1(x, 0.39, 0.11)
-formula <- as.formula(y ~ b1 + (0.49 - b1)*exp(-b2*(x - 8)))
-out1 <- nlregtol.int2(formula = formula, new=TRUE,
-                      xy.data = data.frame(cbind(y, x)),
-                      x.new=c(10,20,50), side = 2,
-                      alpha = 0.05, P = 0.95)
-plotly_regtol(tol.out = out1 , x=x , y=y , new.x = c(20,50) , side = "two",
-              fit.line.type = "dot")
+#set.seed(100)
+#x <- runif(50, 5, 45)
+#f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) +
+#  rnorm(50, sd = 0.01)
+#y <- f1(x, 0.39, 0.11)
+#formula <- as.formula(y ~ b1 + (0.49 - b1)*exp(-b2*(x - 8)))
+#out1 <- nlregtol.int2(formula = formula, new=TRUE,
+#                      xy.data = data.frame(cbind(y, x)),
+#                      x.new=c(10,20,50), side = 2,
+#                      alpha = 0.05, P = 0.95)
+#plotly_regtol(tol.out = out1 , x=x , y=y , new.x = c(20,50) , side = "two",
+#              fit.line.type = "dot")
 ###############
 
 ## 95%/95% 1-sided nonparametric regression tolerance bounds
 ## for a sample of size 50.
-set.seed(100)
-x <- runif(50, 5, 45)
-f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) + rnorm(50, sd = 0.01)
-y <- f1(x, 0.39, 0.11)
-y.hat <- loess(y~x)$fit
-out1 <- npregtol.int2(x = x, y = y, y.hat = y.hat, side = 1, new=TRUE,
-                      alpha = 0.05, P = 0.95, method = "WILKS")
-plotly_regtol(tol.out = out1 , x=x , y=y , side = "two" , fit.line.type = "dash")
+#set.seed(100)
+#x <- runif(50, 5, 45)
+#f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) + rnorm(50, sd = 0.01)
+#y <- f1(x, 0.39, 0.11)
+#y.hat <- loess(y~x)$fit
+#out1 <- npregtol.int2(x = x, y = y, y.hat = y.hat, side = 1, new=TRUE,
+#                      alpha = 0.05, P = 0.95, method = "WILKS")
+#plotly_regtol(tol.out = out1 , x=x , y=y , side = "two" , fit.line.type = "dash")
 ############
-set.seed(100)
-x1 <- runif(50, 5, 45)
-x2 <- rnorm(50 , 0 , 1)
-f1 <- function(x1 , x2 , b1, b2) {b1 + (0.49 - b1)*exp(-b2*(x1 + x2 - 8)) + rnorm(50, sd = 0.01)}
-y <- f1(x1 , x2 , 0.39, 0.11)
-y.hat <- loess(y~ x1 + x2)$fit
-out2 <- npregtol.int2(x = cbind(x1 , x2), y = y, y.hat = y.hat, side = 1,
-                      alpha = 0.05, P = 0.95, method = "WILKS" , new=TRUE)
-plotly_regtol(tol.out = out2 , y=y , x=cbind(x1,x2) , 
-              rect = TRUE , smooth = 100 ,  side = "two")
+#set.seed(100)
+#x1 <- runif(50, 5, 45)
+#x2 <- rnorm(50 , 0 , 1)
+#f1 <- function(x1 , x2 , b1, b2) {b1 + (0.49 - b1)*exp(-b2*(x1 + x2 - 8)) + rnorm(50, sd = 0.01)}
+#y <- f1(x1 , x2 , 0.39, 0.11)
+#y.hat <- loess(y~ x1 + x2)$fit
+#out2 <- npregtol.int2(x = cbind(x1 , x2), y = y, y.hat = y.hat, side = 1,
+#                      alpha = 0.05, P = 0.95, method = "WILKS" , new=TRUE)
+#plotly_regtol(tol.out = out2 , y=y , x=cbind(x1,x2) , 
+#              rect = TRUE , smooth = 100 ,  side = "two")
