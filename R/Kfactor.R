@@ -72,7 +72,7 @@ K.factor <- function (n, f = NULL, alpha = 0.05, P = 0.99, side = 1, method = c(
                   qchisq(P, 1, z^2)/X^2, df = df1, lower.tail = FALSE) * 
                   exp(-0.5 * n * z^2)
                 fun2 <- function(X, df1, P, n, alpha, m) integrate(fun1, 
-                  lower = 0, upper = 5, df1 = df1, P = P, X = X, 
+                  lower = 0, upper = Inf, df1 = df1, P = P, X = X, 
                   n = n, subdivisions = m)$value
                 fun3 <- function(X, df1, P, n, alpha, m) sqrt(2 * 
                   n/pi) * suppressWarnings(fun2(X, df1, P, n, 
@@ -106,13 +106,12 @@ K.factor <- function (n, f = NULL, alpha = 0.05, P = 0.99, side = 1, method = c(
                 Fun1 <- function(z, P, ke, n, f1, delta) (2 * pnorm(-delta + 
                   (ke * sqrt(n * z))/(sqrt(f1))) - 1) * dchisq(z, f1)
                 Fun2 <- function(ke, P, n, f1, alpha, m, delta) integrate(Fun1, 
-                  lower = f1 * delta^2/(ke^2 * n), upper = 1000 * 
-                    n, P = P, ke = ke, n = n, f1 = f1, delta = delta, 
+                  lower = f1 * delta^2/(ke^2 * n), upper = Inf, P = P, ke = ke, n = n, f1 = f1, delta = delta, 
                   subdivisions = m)$value
                 Fun3 <- function(ke, P, n, f1, alpha, m, delta) abs((Fun2(ke = ke, 
                 	P = P, n = n, f1 = f1, alpha = alpha, m = m, delta = delta)) - 
                   	(1 - alpha))
-                K <- optim(par = k2,   fn = Fun3, lower=0, 
+                K <- optim(par = k2,   fn = Fun3, lower=0, upper = 5000+k2, 
                   P = P, n = n, f1 = f, alpha = alpha, m = m, delta = delta, 
                   method="L-BFGS-B")$par
             }
