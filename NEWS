@@ -1,7 +1,9 @@
  Changes in tolerance Version 2.0.1
 ============================
-* 2021-XX-XX
+* 2022-XX-XX
 
+* Improved accuracy of the "OCT" method in K.factor().
+ 
 * Updated ddiffprop() and pdiffprop() functions using an interpolation procedure.  While the routines are
  slower, they now avoid some numerical overflow issues from before.  Thanks to Gustaf Rydevik for
  pointing out this error.
