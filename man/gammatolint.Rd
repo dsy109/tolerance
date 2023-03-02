@@ -56,8 +56,7 @@ distributed according to a gamma distribution.
 
 set.seed(100)
 x <- rgamma(50, 0.30, scale = 2)
-out <- gamtol.int(x = x, alpha = 0.01, P = 0.99, side = 1,
-                  method = "HE")
+out <- gamtol.int(x = x, alpha = 0.01, P = 0.99, side = 1)
 out
 
 plottol(out, x, plot.type = "both", side = "upper", 
