@@ -140,7 +140,7 @@ norm.ss <- function(x = NULL, alpha = 0.05, P = 0.99, delta = NULL, P.prime = NU
 			new.n <- n.star+c(-2:2)
 			new.n <- new.n[new.n>3] 
 			out <- try(cbind(new.n,K.factor(n=new.n,P=P,alpha=alpha,side=2,method="EXACT",m=m),K.factor(n=new.n,P=P.prime,alpha=1-delta,side=2,method="EXACT",m=m)),silent=TRUE)
-			if(class(out)=="try-error"){ 
+			if(inherits(out,"try-error",TRUE)){  
 				new.n <- n.star
 			} else{
 			diff <- (out[,2]-out[,3])
