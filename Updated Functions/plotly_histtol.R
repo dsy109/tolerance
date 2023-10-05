@@ -144,7 +144,7 @@ plotly_histtol <- function (tol.out,
           title <- paste("One-Sided ",(1-alpha) * 100, "% / ", P * 100, 
                          "% Tolerance Limits", sep = "")
         }
-        print("NOTE: The plot reflects two 1-sided tolerance intervals and NOT a 2-sided tolerance interval!")
+        print("NOTE: The plot reflects two 1-sided tolerance intervals, NOT a 2-sided tolerance interval!")
         plot_ly(x=x ,
                 type = 'histogram' , histnorm = "probability" ,
                 name = 'Data' , showlegend = FALSE,
