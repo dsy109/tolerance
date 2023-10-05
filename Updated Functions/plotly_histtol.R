@@ -92,8 +92,8 @@ plotly_histtol <- function (tol.out,
     if (colnames(tol.out)[(n.c - 1)] == "1-sided.lower") {
       if (side == 'lower') {
         if (is.null(title)){
-          title <- paste("One-Sided ",(1-alpha) * 100, "% / ", P * 100, 
-                         "% Lower Tolerance Limit", sep = "")
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Lower Tolerance Limit", sep = "")
         }
         
         plot_ly(x=x ,
@@ -117,8 +117,8 @@ plotly_histtol <- function (tol.out,
           )
       } else if (side == "upper") {
         if (is.null(title)){
-          title <- paste("One-Sided ",(1-alpha) * 100, "% / ", P * 100, 
-                         "% Upper Tolerance Limit", sep = "")
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Upper Tolerance Limit", sep = "")
         }
         plot_ly(x=x ,
                 type = 'histogram' , histnorm = "probability" ,
@@ -141,10 +141,10 @@ plotly_histtol <- function (tol.out,
           )
       } else if (side == "two") {
         if (is.null(title)){
-          title <- paste("One-Sided ",(1-alpha) * 100, "% / ", P * 100, 
-                         "% Tolerance Limits", sep = "")
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Tolerance Limits", sep = "")
         }
-        print("NOTE: The plot reflects two 1-sided tolerance intervals, NOT a 2-sided tolerance interval!")
+        print("NOTE: The plot reflects two 1-sided tolerance limits, NOT a 2-sided tolerance interval!")
         plot_ly(x=x ,
                 type = 'histogram' , histnorm = "probability" ,
                 name = 'Data' , showlegend = FALSE,
@@ -169,8 +169,8 @@ plotly_histtol <- function (tol.out,
     }
     else {
       if(is.null(title)){
-        title <- paste("Two-Sided ",(1-alpha) * 100, "% / ", P * 100, 
-                       "% Tolerance Limits", sep = "")
+        title <- paste("Two-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                       ") Tolerance Limits", sep = "")
       }
       plot_ly(x=x ,
               type = 'histogram' , histnorm = "probability" ,
