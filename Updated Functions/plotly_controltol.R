@@ -157,7 +157,7 @@ plotly_controltol <- function (tol.out ,
           title <- paste("One-Sided ", alpha * 100, "% / ", P * 100, 
                          "% Tolerance Limits", sep = "")
         }
-        print("NOTE: The plot reflects two 1-sided tolerance intervals and NOT a 2-sided tolerance interval!")
+        print("NOTE: The plot reflects two 1-sided tolerance intervals, NOT a 2-sided tolerance interval!")
         plot_ly() %>%
           add_trace(x=(1:length(x)) , y=x , type = 'scatter' , mode = 'markers' ,
                     marker = list(color = x.col , size = x.cex) , 
