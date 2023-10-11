@@ -80,7 +80,7 @@ plotly_controltol <- function (tol.out ,
     }
     else {
       side <- match.arg(side)
-      alpha <- 1 - tol.out[1, 1]
+      alpha <- tol.out[1, 1]
       P <- tol.out[1, 2]
       out <- tol.out
       n.c <- ncol(tol.out)
