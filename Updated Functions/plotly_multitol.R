@@ -112,8 +112,8 @@ plotly_multitol <- function (tol.out,
     pts <- t(mu - (e1 %*% t(v1)))
     
     if (is.null(title)){
-      title <- paste(alpha * 100, "% / ", P * 100, 
-                     "% Tolerance Region", sep = "")
+      title <- paste("(P,",'&#947;',")=(",P,",",(alpha), 
+                       ") Tolerance Region", sep = "")
     }
     plot_ly() %>%
       add_trace(x=x[,1] , y=x[,2] , type = 'scatter' , mode = 'markers' ,
@@ -167,8 +167,8 @@ plotly_multitol <- function (tol.out,
     )
     
     if (is.null(title)){
-      title <- paste(alpha * 100 , "% / " , P * 100,
-                     "% Tolerance Region", sep = "")
+      title <- paste("(P,",'&#947;',")=(",P,",",(alpha), 
+                       ") Tolerance Region", sep = "")
     }
     
     plot_ly() %>%
