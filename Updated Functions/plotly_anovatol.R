@@ -93,7 +93,7 @@ plotly_anovatol <- function (tol.out,
     y.lab <- y.lab[1]
   }
   if (length(x.lab)!=length(tol.out)){
-    stop(paste("Specified labels in x.lab must match the number of factors!", 
+    stop(paste("Specified labels in x.lab must match the number of factor levels!", 
                "\n"))
   }
   temp <- NULL
@@ -117,8 +117,8 @@ plotly_anovatol <- function (tol.out,
         x.axis <- 1:nrow(tol.out[[i]])
         
         if (is.null(title)){
-          title <- paste("One-Sided ",alpha * 100, "% / ", P * 100, 
-                         "% Lower Tolerance Intervals for ",
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Lower Tolerance Limit for ",
                          names(tol.out)[[i]], sep = "")
         }
         
@@ -168,8 +168,8 @@ plotly_anovatol <- function (tol.out,
         x.axis <- 1:nrow(tol.out[[i]])
         
         if (is.null(title)){
-          title <- paste("One-Sided ",alpha * 100, "% / ", P * 100, 
-                         "% Upper Tolerance Intervals for ",
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Upper Tolerance Limit for ",
                          names(tol.out)[[i]], sep = "")
         }
         
@@ -216,13 +216,13 @@ plotly_anovatol <- function (tol.out,
         print(plot) ### Has to use print to show multiple plotes.
       }
     } else if (side == "two") {
-      print("NOTE: The plot reflects two 1-sided tolerance intervals and NOT a 2-sided tolerance interval!")
+      print("NOTE: The plot reflects two 1-sided tolerance limits, NOT a 2-sided tolerance interval!")
       for (i in 1:fact) {
         x.axis <- 1:nrow(tol.out[[i]])
         
         if (is.null(title)){
-          title <- paste("One-Sided ",alpha * 100, "% / ", P * 100, 
-                         "% Tolerance Intervals for ",
+          title <- paste("One-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                         ") Tolerance Limits for ",
                          names(tol.out)[[i]], sep = "")
         }
         
@@ -289,8 +289,8 @@ plotly_anovatol <- function (tol.out,
       x.axis <- 1:nrow(tol.out[[i]])
       
       if (is.null(title)){
-        title <- paste("Two-Sided ",alpha * 100, "% / ", P * 100, 
-                       "% Tolerance Intervals for ",
+        title <- paste("Two-Sided (P,",'&#947;',")=(",P,",",(1-alpha), 
+                       ") Tolerance Limits for ",
                        names(tol.out)[[i]], sep = "")
       }
       
@@ -361,4 +361,3 @@ out.2 <- anovatol.int(lm.out, data = warpbreaks, alpha = 0.10,
                       P = 0.95, side = 2, method = "HE")
 out.2
 plotly_anovatol(out.2, x = warpbreaks , range.min = 20 , range.max = 60)
-
