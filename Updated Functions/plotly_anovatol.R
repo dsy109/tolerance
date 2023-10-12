@@ -81,7 +81,7 @@ plotly_anovatol <- function (tol.out,
   }
   
   resp <- comment(tol.out)[1]
-  alpha <- 1 - as.numeric(comment(tol.out)[2])
+  alpha <- as.numeric(comment(tol.out)[2])
   P <- as.numeric(comment(tol.out)[3])
   tol.out <- tol.out[match(factors,names(tol.out))]
   if (is.null(x.lab)) {
