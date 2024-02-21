@@ -118,6 +118,10 @@ plottol <- function (tol.out, x, y = NULL, y.hat = NULL, side = c("two",
                 ylab = y.lab, ...)
         }
         else if (ncol(x) == 3) {
+          message("NOTE: this 3D plot is a demonstration.
+              \nThe original fuction utilizes the 'rgl' package. \nThe 'rgl' package may not be stable under certain versions of R.
+              \nThe updated function 'plotly_multitol' utilizes the 'plotly' package, which adds stability under various software environments.
+              \nFor details, please refer to the 'plotly_multitol'.")
           # open3d()
           # plot3d(x, size = 3, box = FALSE, xlab = x.lab, 
           #        ylab = y.lab, zlab = z.lab)
@@ -160,7 +164,7 @@ plottol <- function (tol.out, x, y = NULL, y.hat = NULL, side = c("two",
           title <- paste("(P,",'&#947;',")=(",P,",",(a),
                            ") Tolerance Region", sep = "")
           
-          plot_ly() %>%
+          plot3d <- plot_ly() %>%
             add_markers(x=x[,1] , y=x[,2] , z=x[,3], type = 'scatter' , mode = 'markers' ,
                         marker = list(color = "#1f77b4" , size = 6) , 
                         name = 'Data' , showlegend = FALSE) %>%
@@ -184,10 +188,7 @@ plottol <- function (tol.out, x, y = NULL, y.hat = NULL, side = c("two",
                                         tickfont = list(size = 15),
                                         titlefont = list(size = 15)))
             )
-          cat("NOTE: this 3D plot is a demonstration. 
-              \nThe original fuction utilizes the 'rgl' package. \nThe 'rgl' package may not be stable under certain versions of R. 
-              \nThe updated function 'plotly_multitol' utilizes the 'plotly' package, which adds stability under various software environments. 
-              \nFor details, please refer to the 'plotly_multitol'.")
+          print(plot3d)
         }
       }
       else {
