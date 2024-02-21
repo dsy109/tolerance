@@ -167,7 +167,7 @@ plotly_multitol <- function (tol.out,
     )
     
     if (is.null(title)){
-      title <- paste("(P,",'&#947;',")=(",P,",",(alpha), 
+      title <- paste("(P,",'&#947;',")=(",P,",",(1-alpha), 
                        ") Tolerance Region", sep = "")
     }
     
