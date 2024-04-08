@@ -5,11 +5,9 @@
 exportPattern(".")
 
 # Import all packages listed as Imports or Depends
-import(
-  MASS,
-  rgl,
-  stats4
-)
+import(MASS,except=select)
+import(plotly)
+import(stats4)
 
 # Import from
 importFrom("graphics", "abline", "axis", "hist", "lines", "par",
@@ -17,14 +15,14 @@ importFrom("graphics", "abline", "axis", "hist", "lines", "par",
 importFrom("grDevices", "colors", "dev.new")
 importFrom("stats", "IQR", "anova", "as.formula", "cov", "dbinom",
   "dcauchy", "dchisq", "deriv", "dgamma", "dlogis", "dnbinom",
-  "dnorm", "fitted", "integrate", "lm", "median", "nlm",
+  "dnorm", "fitted", "formula", "integrate", "lm", "median", "nlm",
   "nls", "optim", "pbeta", "pbinom", "pchisq", "phyper",
   "pnorm", "predict", "qbeta", "qbinom", "qcauchy", "qchisq",
   "qf", "qgamma", "qhyper", "qlogis", "qnbinom", "qnorm",
   "qpois", "qt", "quantile", "rbeta", "rbinom", "rchisq",
-  "rexp", "rnbinom", "rnorm", "rpois", "runif", "sd",
+  "rexp", "rgamma", "rnbinom", "rnorm", "rpois", "runif", "sd",
   "uniroot", "var", "approx", "dhyper", "model.matrix"
 )
 importFrom(
-  "utils", "tail"
+  "utils", "combn", "tail"
 )
