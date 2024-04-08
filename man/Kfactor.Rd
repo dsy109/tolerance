@@ -66,11 +66,11 @@ See \code{\link{TDist}} for further details.
 
 K.factor(10, P = 0.95, side = 2, method = "HE")
 K.factor(10, P = 0.95, side = 2, method = "WBE")
-K.factor(10, P = 0.95, side = 2, method = "EXACT", m = 50)
+K.factor(10, P = 0.95, side = 2, method = "EXACT", m = 30)
 
-K.factor(100, P = 0.95, side = 2, method = "HE")
-K.factor(100, P = 0.95, side = 2, method = "WBE")
-K.factor(100, P = 0.95, side = 2, method = "EXACT", m = 50)
+K.factor(50, P = 0.95, side = 2, method = "HE")
+K.factor(50, P = 0.95, side = 2, method = "WBE")
+K.factor(50, P = 0.95, side = 2, method = "EXACT", m = 30)
 
 }
 

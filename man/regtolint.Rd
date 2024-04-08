@@ -2,7 +2,7 @@
 \title{(Multiple) Linear Regression Tolerance Bounds}
 \alias{regtol.int}
 \usage{
-regtol.int(reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99) 
+regtol.int(reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99, new = FALSE) 
 }
 \description{
   Provides 1-sided or 2-sided (multiple) linear regression tolerance bounds.  It is also possible to fit a 
@@ -16,6 +16,7 @@ regtol.int(reg, new.x = NULL, side = 1, alpha = 0.05, P = 0.99)
   respectively).} 
   \item{alpha}{The level chosen such that \code{1-alpha} is the confidence level.}
   \item{P}{The proportion of the population to be covered by the tolerance bound(s).}
+  \item{new}{When \code{new = TRUE}, the function shows updated version of outcomes.}
 } 
 \value{
   \code{regtol.int} returns a data frame with items:

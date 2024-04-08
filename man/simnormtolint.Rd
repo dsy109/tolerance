@@ -49,10 +49,10 @@ distributed according to a normal distribution.
 
 \examples{ 
 ## 95\%/95\% simultaneous 2-sided normal tolerance 
-## intervals for three samples of unequal size. 
+## intervals for two samples of unequal size. 
 
 set.seed(100)
-x <- list(rnorm(20),rnorm(10,1),rnorm(12,1,2))
+x <- list(rnorm(10,1),rnorm(12,1,2))
 out <- simnormtol.int(x = x, alpha = 0.05, P = 0.95, 
                       side = 2, method = "BONF")
 out

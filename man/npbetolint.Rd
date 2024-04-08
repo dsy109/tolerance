@@ -29,7 +29,7 @@ npbetol.int(x, Beta = 0.95, side = 1, upper = NULL, lower = NULL)
 }
 
 \references{
-  Beran, R. and Hall, P (1993), Interpolated Nonparametric Prediction Intervals and Confidence Intervals, \emph{Journal of the Royal Statistical Society, Series B}, \bold{55}, 643--652.
+  Beran, R. and Hall, P. (1993), Interpolated Nonparametric Prediction Intervals and Confidence Intervals, \emph{Journal of the Royal Statistical Society, Series B}, \bold{55}, 643--652.
 } 
 
 \examples{ 

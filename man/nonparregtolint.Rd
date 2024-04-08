@@ -4,7 +4,7 @@
 \usage{
 npregtol.int(x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
              method = c("WILKS", "WALD", "HM"), upper = NULL, 
-             lower = NULL)
+             lower = NULL, new = FALSE)
 }
 \description{
   Provides 1-sided or 2-sided nonparametric regression tolerance bounds.
@@ -25,6 +25,7 @@ npregtol.int(x, y, y.hat, side = 1, alpha = 0.05, P = 0.99,
   an issue when \code{method = "WILKS"} is used as it only produces one set of tolerance bounds.}
   \item{upper}{The upper bound of the data.  When \code{NULL}, then the maximum of \code{x} is used.}
   \item{lower}{The lower bound of the data.  When \code{NULL}, then the minimum of \code{x} is used.}
+  \item{new}{When \code{new = TRUE}, the function shows updated version of outcomes.}
 } 
 \value{
   \code{npregtol.int} returns a data frame with items:
@@ -57,11 +58,12 @@ f1 <- function(x, b1, b2) b1 + (0.49 - b1)*exp(-b2*(x - 8)) +
 y <- f1(x, 0.39, 0.11)
 y.hat <- loess(y~x)$fit
 out <- npregtol.int(x = x, y = y, y.hat = y.hat, side = 2, 
-                    alpha = 0.05, P = 0.95, method = "WILKS")
+                    alpha = 0.05, P = 0.95, method = "WILKS",
+                    new = TRUE)
 out
 
-plottol(out, x = x, y = y, y.hat = y.hat, side = "two", 
-        x.lab = "X", y.lab = "Y")
+library(plotly)
+plotly_regtol(tol.out = out , x = x , y = y)
 }
 
 \keyword{file}
