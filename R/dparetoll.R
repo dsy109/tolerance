@@ -25,6 +25,6 @@ dpareto.ll <- function(x, theta = NULL, ...){
   }
   ll.f <- function(theta) -sum(ddpareto(x,theta=theta,log=TRUE))
   fit <- try(suppressWarnings(stats4::mle(ll.f,start=list(theta=theta),lower=0,upper=1,method="Brent")),silent=TRUE)
-  if(class(fit)=="try-error") stop(paste("Numerical optimization of the MLE failed.  Consider trying a different starting value for theta.","\n"))
+  if (inherits(fit, "try-error")) stop(paste("Numerical optimization of the MLE failed.  Consider trying a different starting value for theta.","\n"))
   fit
 }  

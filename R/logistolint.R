@@ -17,7 +17,7 @@ logistol.int <- function (x, alpha = 0.05, P = 0.99, log.log = FALSE,
   log.ll <- function(x, pars) sum(-dlogis(x, location = pars[1], 
                                           scale = pars[2], log = TRUE))
   out <- try(suppressWarnings(nlm(log.ll, p = inits, x = x, hessian = TRUE)),silent=TRUE)
-  if(class(out)=="try-error"){
+  if (inherits(out, "try-error")){
     L <- U <- m.mom
   } else{
     out.est <- out$estimate

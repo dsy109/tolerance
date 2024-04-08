@@ -1,6 +1,4 @@
-library(MASS)
-
-semicont.TI <- function(x,P,alpha,N){
+semiconttol.int <- function(x, alpha = 0.05, P = 0.99, N = 1000){
 
   #Vectorized version of gfq_pi
   gfq_pi.n <- function(n, x, N){

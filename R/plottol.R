@@ -1,4 +1,3 @@
-library(plotly)
 plottol <- function (tol.out, x, y = NULL, y.hat = NULL, side = c("two", 
                                                                   "upper", "lower"), plot.type = c("control", "hist", "both"), 
                      x.lab = NULL, y.lab = NULL, z.lab = NULL, ...) 
@@ -162,7 +161,7 @@ plottol <- function (tol.out, x, y = NULL, y.hat = NULL, side = c("two",
           )
           
           title <- paste("(P,",'&#947;',")=(",P,",",(a),
-                           ") Tolerance Region", sep = "")
+                         ") Tolerance Region", sep = "")
           
           plot3d <- plot_ly() %>%
             add_markers(x=x[,1] , y=x[,2] , z=x[,3], type = 'scatter' , mode = 'markers' ,

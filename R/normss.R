@@ -24,8 +24,8 @@ norm.ss <- function(x = NULL, alpha = 0.05, P = 0.99, delta = NULL, P.prime = NU
 			n <- try(ceiling(uniroot(f2,mu=mu.0,sigma=s.0,alpha=alpha,P=P,side=side,spec.L=spec.L,interval=c(2,1e100))$root),silent=TRUE)
 			f.calc <- f2(2,mu=mu.0,sigma=s.0,alpha=alpha,P=P,side=side,spec.L=spec.L)
 		}
-			if(class(n)=="try-error" & f.calc<0) n <- Inf
-			if(class(n)=="try-error" & f.calc>=0) n <- 2
+			if(inherits(n, "try-error") & f.calc<0) n <- Inf
+			if(inherits(n, "try-error") & f.calc>=0) n <- 2
 	} else{
 		dL <- abs(mu.0-spec.L)
 		dU <- abs(mu.0-spec.U)
@@ -36,7 +36,7 @@ norm.ss <- function(x = NULL, alpha = 0.05, P = 0.99, delta = NULL, P.prime = NU
 			n <- try(ceiling(uniroot(f1,mu=mu.0,sigma=s.0,alpha=alpha,P=P,side=1,spec.U=spec.U,interval=c(2,1e10))$root),silent=TRUE)
 			f.calc <- f1(2,mu=mu.0,sigma=s.0,alpha=alpha,P=P,side=1,spec.U=spec.U)
 		}
-		if(class(n)=="try-error"){ 
+		if (inherits(n, "try-error")){ 
 			if(f.calc<0){
 				n <- Inf
 			} else n <- 2
@@ -65,7 +65,7 @@ norm.ss <- function(x = NULL, alpha = 0.05, P = 0.99, delta = NULL, P.prime = NU
 		while(!within.spec&brk){
 			n <- n + 1
 			TI <- try(mu.0 + c(-1,1)*K.factor(n=n,alpha=alpha,P=P,side=2,method="OCT",m=m)*s.0,silent=TRUE)
-			if(class(TI)=="try-error"){
+			if (inherits(TI, "try-error")){
 				n <- n.old
 				brk <- FALSE
 			} else within.spec <- (TI[1]>=spec.L) & (TI[2]<=spec.U)		

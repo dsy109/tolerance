@@ -58,7 +58,7 @@ negbintol.int <- function (x, n, m = NULL, alpha = 0.05, P = 0.99, side = 1, met
         lower.nu <- suppressWarnings(try(uniroot(fun.l, c(1e-12, 
             nu.hat), x = x, n = n, nu.hat = nu.hat, alpha = alpha, 
             tol = 1e-20)$root, silent = TRUE))
-        if (class(lower.nu) == "try-error") 
+        if (inherits(lower.nu, "try-error")) 
             lower.nu <- 1e-07
         fun.u = function(p, x, n, nu.hat, alpha) 2 * (log(dnbinom(x, 
             n, nu.hat)) - log(dnbinom(x, n, p))) - qchisq(alpha, 
@@ -66,7 +66,7 @@ negbintol.int <- function (x, n, m = NULL, alpha = 0.05, P = 0.99, side = 1, met
         upper.nu <- suppressWarnings(try(uniroot(fun.u, c(nu.hat, 
             1), x = x, n = n, nu.hat = nu.hat, alpha = alpha, 
             tol = 1e-20)$root, silent = TRUE))
-        if (class(upper.nu) == "try-error") 
+        if (inherits(upper.nu, "try-error")) 
             upper.nu <- 1
     }
     else if (method == "SP") {
@@ -82,23 +82,23 @@ negbintol.int <- function (x, n, m = NULL, alpha = 0.05, P = 0.99, side = 1, met
         }
         lower.nu <- try(uniroot(fun.sp, c(1e-07, 0.9999999), 
             x = x, n = n, K.a = alpha, tol = 1e-20)$root, silent = TRUE)
-        if (class(lower.nu) != "try-error") 
+        if (!inherits(lower.nu, "try-error")) 
             if (abs(lower.nu - nu.hat) < 1e-05) 
                 lower.nu <- try(uniroot(fun.sp, c(1e-07, 0.9999999), 
                   x = x, n = n, K.a = alpha, tol = 0.009)$root, 
                   silent = TRUE)
-        if (class(lower.nu) == "try-error") 
+        if (inherits(lower.nu, "try-error")) 
             lower.nu <- 1e-07
         lower.nu <- max(1e-07, lower.nu, na.rm = TRUE)
         upper.nu <- try(uniroot(fun.sp, c(1e-12, 0.9999999), 
             x = x, n = n, K.a = 1 - alpha, tol = 1e-20)$root, 
             silent = TRUE)
-        if (class(upper.nu) != "try-error") 
+        if (!inherits(upper.nu, "try-error")) 
             if (abs(upper.nu - nu.hat) < 1e-05) 
                 upper.nu <- try(uniroot(fun.sp, c(1e-12, 0.9999999), 
                   x = x, n = n, K.a = 1 - alpha, tol = 0.009)$root, 
                   silent = TRUE)
-        if (class(upper.nu) == "try-error") 
+        if (inherits(upper.nu, "try-error")) 
             upper.nu <- 1
         upper.nu <- min(1, upper.nu, na.rm = TRUE)
         if (x == 0) {

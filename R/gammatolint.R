@@ -20,7 +20,7 @@ gamtol.int <- function (x, alpha = 0.05, P = 0.99, side = 1, method = c("HE", "H
   gamma.ll <- function(x, pars) sum(-dgamma(x, shape = pars[1], 
                                             scale = pars[2], log = TRUE))
   out <- try(suppressWarnings(nlm(gamma.ll, p = inits, x = x)$estimate),silent=TRUE)
-  if(class(out)=="try-error"){
+  if (inherits(out, "try-error")){
     out=inits
     message("Note: Difficulties with obtaining maximum likelihood estimates through the nlm function.  Method of moments estimates are used for calculating the tolerance limits.") 
   }

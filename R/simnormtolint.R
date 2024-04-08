@@ -1,7 +1,7 @@
 simnormtol.int <- function(x, alpha = 0.05, P = 0.99, side = 1, 
                            method = c("EXACT", "BONF"), m = 50, log.norm = FALSE) 
 {
-  if(class(x)!="matrix"&class(x)!="list"){
+  if(inherits(x , "matrix") & !inherits(x , "list")){
     stop(paste("The data must be given as a matrix or list.", 
                "\n"))
   }

@@ -10,7 +10,7 @@ zipftol.int <- function (x, m = NULL, N = NULL, alpha = 0.05, P = 0.99, side = 1
         P <- (P + 1)/2
     }
 	fit <- zm.ll(x = x, N = N, s = s, b = b, dist = dist, ...)
-	if(class(x)!="table"){ 
+	if (!inherits(x, "table")){ 
 	x=table(x)
 	}
 	names(x)=1:length(x)
@@ -55,10 +55,10 @@ zipftol.int <- function (x, m = NULL, N = NULL, alpha = 0.05, P = 0.99, side = 1
 	    	lower <- max(qzipfman(1 - P, s = upper.s, N = Inf), 1)
     		upper <- qzipfman(P, s = lower.s, N = Inf)
 	}	
-    	if (class(lower) == "try-error") {
+	if (inherits(lower, "try-error")) {
 	        lower <- 1
 	}    
-	if (class(upper) == "try-error") {
+	if (inherits(upper, "try-error")) {
 	        upper <- N
 	}
 	if (side == 2) {

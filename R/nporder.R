@@ -4,7 +4,7 @@ np.order <- function (m, alpha = 0.05, P = 0.99, indices = FALSE)
         (1 - alpha)
     n <- try(suppressWarnings(ceiling(uniroot(f, interval = c(m, 
         1e+05 * m), m = m, alpha = alpha, P = P)$root)), silent = TRUE)
-    if (class(n) == "try-error") 
+    if (inherits(n, "try-error")) 
         stop("Interval to search for the root is too wide.", 
             call. = FALSE)
     if (indices == FALSE | (m < 2)) {

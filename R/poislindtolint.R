@@ -3,7 +3,7 @@ poislindtol.int <- function(x, m = NULL, alpha=0.05, P=0.99, side = 1, ...){
         stop(paste("Must specify a one-sided or two-sided procedure!", 
             "\n"))
     }
-	n <- ifelse(class(x)=="table",sum(x),length(x))
+	n <- ifelse(inherits(x , "table"),sum(x),length(x))
     if (side == 2) {
         alpha <- alpha/2
         P <- (P + 1)/2

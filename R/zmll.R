@@ -1,6 +1,6 @@
 zm.ll <- function (x, N=NULL, s = 1, b = 1, dist = c("Zipf", "Zipf-Man", "Zeta"), ...) {	
 dist <- match.arg(dist)
-if(class(x)!="table"){ 
+if (!inherits(x, "table")){ 
 	x <- table(x)
 	}
 	names(x)=1:length(x)

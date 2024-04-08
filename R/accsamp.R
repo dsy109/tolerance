@@ -9,7 +9,7 @@ acc.samp <- function (n, N, alpha = 0.05, P = 0.99, AQL = 0.01, RQL = 0.02)
     ff <- function(k, c, m, n) (alpha) - phyper(c, m, n, k)
     c <- try(floor(uniroot(ff, interval = c(0, ceiling(D)), k = n, m = m.h, 
         n = n.h)$root), silent = TRUE)
-    if (class(c) == "try-error") 
+    if (inherits(c, "try-error")) 
         c <- 0
     if (phyper(c, m = m.h, n = n.h, k = n) > alpha) 
         c <- max(c - 1, 0)
