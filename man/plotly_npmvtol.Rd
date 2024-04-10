@@ -22,7 +22,8 @@ plotly_npmvtol(tol.out,
                title.position.y = 0.98,
                title.size = 12,
                show.bound = TRUE, 
-               bound.type = c("dash", "dot", "solid", "longdash", "dashdot", "longdashdot"), 
+               bound.type = c("dash", "dot", "solid", "longdash", 
+                              "dashdot", "longdashdot"), 
                bound.col = "#000000",
                bound.lwd = 1
                )
