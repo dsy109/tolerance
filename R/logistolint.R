@@ -23,7 +23,6 @@ logistol.int <- function (x, alpha = 0.05, P = 0.99, log.log = FALSE,
     out.est <- out$estimate
     m <- out.est[1]
     s <- out.est[2]
-    print(c(m,s))
     inv.fish <- solve(out$hess)
     var.m <- inv.fish[1, 1]
     var.s <- inv.fish[2, 2]
