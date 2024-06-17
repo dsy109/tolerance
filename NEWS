@@ -1,3 +1,16 @@
+ Changes in tolerance Version 3.0.X
+============================
+* 2024-XX-XX
+
+* Provided updated NEWS file, which mistakenly did not get uploaded with version 3.0.0.
+
+* Updated logistol.int() to include two methods: "HALL" and "BE".  The "HALL" method is the default
+ method that has always existed in 'tolerance'.  The added method of "BE" is that due to Bain and
+ Englehardt (1991).  This method is more stable and mitigates some of the numerical issues due to the "HALL"
+ method.  Thanks to Yixuan Zou and Cameron Willden for both pointing out this method and for providing the
+ necessary code.
+
+
  Changes in tolerance Version 3.0.0
 ============================
 * 2024-04-18
