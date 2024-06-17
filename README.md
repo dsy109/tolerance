@@ -3,7 +3,7 @@
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)	
 ![CRAN/METACRAN](https://img.shields.io/cran/l/tolerance)	
 [![CRAN status](https://www.r-pkg.org/badges/version/tolerance)](https://CRAN.R-project.org/package=tolerance)
-[![Dependencies](https://tinyverse.netlify.com/badge/tolerance)](https://cran.r-project.org/package=tolerance)
+[![Dependencies](https://tinyverse.netlify.app/badge/tolerance)](https://cran.r-project.org/package=tolerance)
 ![GitHub last commit](https://img.shields.io/github/last-commit/dsy109/tolerance)
 [![Downloads](https://cranlogs.r-pkg.org/badges/tolerance?color=brightgreen)](https://www.r-pkg.org/pkg/tolerance)
 [![JSS](https://img.shields.io/badge/JSS-10.18637%2Fjss.v036.i05-brightgreen)](https://dx.doi.org/10.18637/jss.v036.i05)
