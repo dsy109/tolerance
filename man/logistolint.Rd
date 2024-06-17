@@ -3,7 +3,7 @@
 \alias{logistol.int}
 \usage{
 logistol.int(x, alpha = 0.05, P = 0.99, log.log = FALSE,
-             side = 1)
+             side = 1, method = c("HALL", "BE"))
 }
 \description{
   Provides 1-sided or 2-sided tolerance intervals for data distributed according to a logistic or log-logistic distribution.
@@ -17,6 +17,8 @@ logistol.int(x, alpha = 0.05, P = 0.99, log.log = FALSE,
   case the output gives tolerance intervals for the log-logistic distribution.  The default is \code{FALSE}.} 
   \item{side}{Whether a 1-sided or 2-sided tolerance interval is required (determined by \code{side = 1} or \code{side = 2},
   respectively).}
+\item{method}{The method for calculating the tolerance limits.  \code{"HALL"} is the method due to Hall, which can be numerically
+  unstable (see below for more information).  \code{"BE"} is the method due to Bain and Englehardt, which is typically more reliable.}
 } \value{
   \code{logistol.int} returns a data frame with items:
   \item{alpha}{The specified significance level.}
@@ -32,10 +34,16 @@ logistol.int(x, alpha = 0.05, P = 0.99, log.log = FALSE,
 }
 \details{
 Recall that if the random variable \eqn{X} is distributed according to a log-logistic distribution, then the random variable \eqn{Y = ln(X)} is
-distributed according to a logistic distribution.
+distributed according to a logistic distribution.  For \code{method = "HALL"}, the method due to Hall (1975) is implemented.  This, however, can have
+numerical instabilities due to taking square roots of negative numbers in the calculation, thus leading to two-sided tolerance limits where the upper 
+tolerance limit is smaller than the lower tolerance limit.  \code{method = "BE"} calculates the limits using the method due to Bain and Englehardt (1991),
+which tends to be more reliable.
 }
 
 \references{
+  Bain, L. and Englehardt, M. (1991), \emph{Statistical Analysis of Reliability and Life Testing Models: Theory
+  and Methods, Second Edition}, Marcel Dekker, Inc.
+
   Balakrishnan, N. (1992), \emph{Handbook of the Logistic Distribution}, Marcel Dekker, Inc.
 
   Hall, I. J. (1975), One-Sided Tolerance Limits for a Logistic Distribution Based on Censored Samples, \emph{Biometrics},
