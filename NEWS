@@ -1,6 +1,15 @@
- Changes in tolerance Version 2.0.1
+ Changes in tolerance Version 3.0.0
 ============================
-* 2022-XX-XX
+* 2024-04-18
+
+* Modernized the graphics infrastructure of 'tolerance' by using 'plotly' instead of base R graphics.  This
+ modernization resulted in 'rgl' no longer being a required package, but no functionality in old graphics
+ functions has been impacted.  The new graphics functions include plotly_anovatol(), plotly_controltol(),
+ plotly_histtol(), plotly_multitol(), plotly_normOC(), plotly_npmvtol(), and plotly_regtol().
+ 
+* Added the semiconttol.int() function, which constructs fiducial-based confidence, prediction, and tolerance 
+ limits for semicontinuous data.  Specifically, the routines are for the zero-inflated lognormal and zero-inflated
+ gamma distributions.
 
 * Improved accuracy of the "OCT" method in K.factor().
  
@@ -9,8 +18,16 @@
  pointing out this error.
  
 * Fixed incorrect handling of the upper and lower arguments in the npbetol.int() function.
+
+* Removed an unnecessary print statement in logistol.int().  Thanks to @bd-cameron-willden for identifying
+ this error.
+
+* Acknowledged that updates to this version were made possible through Chan Zuckerberg Initiative: Essential 
+ Open Source Software for Science (Grant No. 2020-255193).
+
+* Added Kedai Cheng (UNC-Asheville) as a co-author.
  
-* Updated documentation.
+* Updated documentation and numerous references.
 
 
  Changes in tolerance Version 2.0.0
